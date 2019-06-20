@@ -14,6 +14,7 @@ public class Locatario {
 		this.matricula = matricula;
 
 	}
+	
 
 	public int getMatricula() {
 		return matricula;
