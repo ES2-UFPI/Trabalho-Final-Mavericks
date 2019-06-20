@@ -16,7 +16,8 @@
     </path>
     <path id="Trabalho-Final-Mavericks.classpath">
         <pathelement location="bin"/>
-        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="junit.jar"/>
+        <pathelement location="org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -68,6 +69,17 @@
             <classpath refid="Trabalho-Final-Mavericks.classpath"/>
         </junit>
     </target>
+
+    <target name="TesteCadastroLocatario.cadastrarLocatario">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="testes.TesteCadastroLocatario" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="Trabalho-Final-Mavericks.classpath"/>
+        </junit>
+    </target>
+
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
             <fileset dir="${junit.output.dir}">
