@@ -1,19 +1,12 @@
 package main;
 
-public class Exemplar 
+public abstract class Exemplar 
 {
-	private int codigo;
-	private int quantidade;
-	private String titulo;
-	private String autor;
-	
-	public Exemplar (int codigo, int quantidade, String titulo, String autor)
-	{
-		this.codigo = codigo;
-		this.quantidade = quantidade;
-		this.titulo = titulo;
-		this.autor = autor;
-	}
+	protected int codigo;
+	protected int quantidade;
+	protected String titulo;
+	protected String autor;
+	protected boolean alocado = false;
 	
 	public int getCodigo ()
 	{
@@ -35,6 +28,11 @@ public class Exemplar
 		return autor;
 	}
 	
+	public boolean isAlocado ()
+	{
+		return alocado;
+	}
+	
 	public void setCodigo (int novoCodigo)
 	{
 		codigo = novoCodigo;
@@ -53,5 +51,10 @@ public class Exemplar
 	public void setAutor (String novoAutor)
 	{
 		autor = novoAutor;
+	}
+	
+	public void setAlocado (boolean newAlocado)
+	{
+		alocado = newAlocado;
 	}
 }
