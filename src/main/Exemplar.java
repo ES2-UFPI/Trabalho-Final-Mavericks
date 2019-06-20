@@ -40,9 +40,9 @@ public class Exemplar
 		codigo = novoCodigo;
 	}
 	
-	public void addQuantidade (int addQuantidade)
+	public void setQuantidade (int novaQuantidade)
 	{
-		quantidade += addQuantidade;
+		quantidade = novaQuantidade;
 	}
 	
 	public void setTitulo (String novoTitulo)
