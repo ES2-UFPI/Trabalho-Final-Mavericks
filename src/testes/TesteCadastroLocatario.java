@@ -17,7 +17,7 @@ public class TesteCadastroLocatario {
 		assertEquals("neto", Main.locatarios.get(0).getNome());
 		assertEquals("Aluno", Main.locatarios.get(0).getCategoria());
 		assertEquals("123", Main.locatarios.get(0).getSenha());
-		
+
 		Main.cadastrarLocatario("joao", "Professor", "234");
 		assertEquals(2, Main.matricula);
 		assertEquals("joao", Main.locatarios.get(1).getNome());
