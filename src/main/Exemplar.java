@@ -23,7 +23,7 @@ public abstract class Exemplar
 		return titulo;
 	}
 	
-	public String getAutorString ()
+	public String getAutor ()
 	{
 		return autor;
 	}
