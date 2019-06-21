@@ -102,6 +102,69 @@ public class Main {
 	}
 
 	public static void alterarConfiguracao() {
+		s2 = new Scanner(System.in);
+		if(configuracao == null){
+			System.out.println("Não ha configuracoes cadastradas");
+		}else{
+			int aux;
+			do{
+			Menu mainMenu = new Menu("Alterar Configuracao", Arrays.asList("Multa", "Prazo de alunos", "Prazo de professores",
+					"Prazo de tecnicos administrativos", "Sair"));
+			aux = mainMenu.getSelection();
+			if(aux == 1){
+				System.out.println("Digite o valor da nova multa: ");
+				double multa = s2.nextDouble();
+				if(multa <= 0){
+					System.out.println("Valor da multa invalido!");
+				}else{
+					alterarConfiguracaom(aux, multa);
+				}
+			}if(aux == 2){
+				System.out.println("Digite o valor do novo prazo para alunos: ");
+				int alu = s2.nextInt();
+				if(alu <= 0){
+					System.out.println("Valor do prazo invalido!");
+				}else{
+					alterarConfiguracaod(aux, alu);				}
+			}if(aux == 3){
+				System.out.println("Digite o valor do novo prazo para professores: ");
+				int prof = s2.nextInt();
+				if(prof <= 0){
+					System.out.println("Valor do prazo invalido!");
+				}else{
+					alterarConfiguracaod(aux, prof);
+				}
+			}if(aux == 4){
+				System.out.println("Digite o valor do novo prazo para tecnico-administrativos: ");
+				int tec = s2.nextInt();
+				if(tec <= 0){
+					System.out.println("Valor do prazo invalido!");
+				}else{
+					alterarConfiguracaod(aux, tec);
+				}
+			}
+			}while(aux != 5);
+		}
+	}
+	
+	public static void alterarConfiguracaom(int aux, double multa){
+		configuracao.setMulta(multa);
+		System.out.println("Valor da multa alterado!");
+	}
+	
+	public static void alterarConfiguracaod(int aux, int dias){
+		switch(aux){
+		case 2: 
+			configuracao.setDiasAluno(dias);
+			break;
+		case 3:
+			configuracao.setDiasProf(dias);
+			break;
+		case 4: 
+			configuracao.setDiasTec(dias);
+			break;
+		}
+		System.out.println("Valor do prazo alterado!");
 	}
 
 	public static void cadastrarLocatario() {
