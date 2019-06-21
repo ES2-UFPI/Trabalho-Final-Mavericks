@@ -65,6 +65,39 @@ public class Main {
 	}
 
 	public static void pesquisar() {
+		s2 = new Scanner(System.in);
+		System.out.println("1 - Pesquisar Locatario");
+		System.out.println("2 - Pesquisar Exemplar");
+		System.out.println("Digite a opcao de pesquisa: \n");
+		
+		int op = Integer.parseInt(s2.nextLine());
+		if (op == 1) {
+			System.out.println("Digite a matricula : ");
+			int matri = Integer.parseInt(s2.nextLine());
+			Locatario locatario = pesquisarLocatario(matri);
+
+			if (locatario != null) {
+				System.out.println("\nDados do Locatario\n");
+				System.out.println("  Nome: " + locatario.getNome() + "\n  Matricula: "+ locatario.getMatricula() + "\n  Categoria: "+ locatario.getCategoria() + "\n");
+				
+			}else {
+				System.out.println("Não encontrado");
+			}
+			System.out.println("Aperte qualquer tecla para voltar!\n");
+			s2.nextLine();
+		}
+
+	}
+
+	public static Locatario pesquisarLocatario(int matricu) {
+
+		for (int i = 0; i < locatarios.size(); i++) {
+			if (locatarios.get(i).matricula == matricu) {
+				return locatarios.get(i);
+			}
+		}
+		return null;
+
 	}
 
 	public static void alterarConfiguracao() {
@@ -101,7 +134,7 @@ public class Main {
 				}
 			}
 
-			System.out.println("Digite sua senha: ");
+			System.out.println("Crie uma senha: ");
 			String senha = s2.nextLine();
 
 			cadastrarLocatario(nome, categoria, senha);
