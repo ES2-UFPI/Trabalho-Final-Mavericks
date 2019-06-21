@@ -2,13 +2,14 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
 
 	private static ArrayList<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
-	private static ArrayList<Exemplar> exemplares = new ArrayList<Exemplar>();
+	public static ArrayList<Exemplar> exemplares = new ArrayList<Exemplar>();
 	public static ArrayList<Locatario> locatarios = new ArrayList<Locatario>();
 	public static int matricula = 0;
 	private static Scanner s2;
@@ -57,8 +58,66 @@ public class Main {
 	}
 
 	public static void emprestimo() {
+		Scanner s2 = new Scanner(System.in);
+		Locatario loc = null;
+		Exemplar ex = null;
+		//Date data = new Date();
+		Calendar dataAtual = Calendar.getInstance();
+		Calendar dataDev = Calendar.getInstance();
+		
+		do {
+			System.out.println("Informe a matricula do locatario: ");
+			int matricula = s2.nextInt();
+			loc = buscarLocatario(matricula);
+			if(loc == null) 
+				System.out.println("Locatario nao encontrado!");
+		}while(loc == null);
+		
+		do {
+			System.out.println("Informe o codigo do exemplar");
+			int codigo = s2.nextInt();
+			ex = buscarExemplar(codigo);
+			if(ex == null)
+				System.out.println("Exemplar nao encontrado!");
+		}while(ex == null);
+		
+		if(ex.disponivel()) {
+			ex.setQuantidade(ex.getQuantidade()-1);
+			emprestimos.add( new Emprestimo(ex, loc, dataAtual, dataDev) );
+			
+			dataDev = calcularData(dataAtual,dataDev,loc);
+			dataDev.set(Calendar.MONTH,dataDev.get(Calendar.MONTH)+1);
+			
+			System.out.println("Emprestimo realizado com sucesso:\n"+ex.getTitulo()+" "+
+			ex.getAutorString()+"\nDevolver em: "+dataDev.get(Calendar.DAY_OF_MONTH)+"/"+
+			dataDev.get(Calendar.MONTH)+"/"+dataDev.get(Calendar.YEAR)+"\n");
+			
+			
+		}else {
+			System.out.println("Nao ha exemplares disponiveis!\n");
+			
+		}
+		
 	}
 
+
+	public static Calendar calcularData(Calendar dataAtual,Calendar dataDev,Locatario loc) {
+		int dias=0;
+		if(loc.getCategoria().equals("Aluno")) {
+			dias = configuracao.getDiasAluno();
+			
+		}else if(loc.getCategoria().equals("Professor")) {
+			dias = configuracao.getDiasProf();
+			
+		}else if(loc.getCategoria().equals("Tecnico Adm.")) {
+			dias = configuracao.getDiasTec();
+		}
+		
+		dataDev.set(Calendar.DAY_OF_MONTH, dataAtual.get(Calendar.DAY_OF_MONTH)+dias);
+
+		return dataDev;
+	}
+	
 	public static void devolucao() {
 	}
 
@@ -184,4 +243,23 @@ public class Main {
 		}
 	}
 
+	public static Locatario buscarLocatario(int matricula) {
+		for(Locatario x:locatarios) {
+			if(x.getMatricula()==matricula) {
+				return x;
+			}
+		}
+		return null;
+	}
+	
+	public static Exemplar buscarExemplar(int cod) {
+		for(Exemplar x:exemplares) {
+			if(x.getCodigo()==cod) {
+				return x;
+			}
+		}
+		return null;
+	}
+	
+	
 }

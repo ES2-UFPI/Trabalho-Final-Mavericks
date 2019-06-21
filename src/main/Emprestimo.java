@@ -1,14 +1,15 @@
 package main;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Emprestimo {
 
 	private Exemplar exemplar;
 	private Locatario locatario;
-	private Date data_emp;
-	private Date data_dev;
+	private Calendar data_emp;
+	private Calendar data_dev;
 	
-	public Emprestimo(Exemplar exemplar, Locatario locatario, Date data_emp, Date data_dev) {
+	public Emprestimo(Exemplar exemplar, Locatario locatario, Calendar data_emp, Calendar data_dev) {
 		super();
 		this.exemplar = exemplar;
 		this.locatario = locatario;
@@ -32,19 +33,19 @@ public class Emprestimo {
 		this.locatario = locatario;
 	}
 
-	public Date getData_emp() {
+	public Calendar getData_emp() {
 		return data_emp;
 	}
 
-	public void setData_emp(Date data_emp) {
+	public void setData_emp(Calendar data_emp) {
 		this.data_emp = data_emp;
 	}
 
-	public Date getData_dev() {
+	public Calendar getData_dev() {
 		return data_dev;
 	}
 
-	public void setData_dev(Date data_dev) {
+	public void setData_dev(Calendar data_dev) {
 		this.data_dev = data_dev;
 	}
 	
