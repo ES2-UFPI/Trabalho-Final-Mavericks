@@ -12,14 +12,12 @@ public class TesteCadastroConfiguracao {
 
 	@Test
 	public void testaCadastroMulta() {
-		Main.configuracao();
-		Configuracao conf = new Configuracao(2.80, 2, 3, 4);
-		Assert.assertEquals(conf.getMulta(), Main.configuracao.getMulta(), 0.0 );
-		assertEquals(conf.getDiasAluno(), Main.configuracao.getDiasAluno());
-		assertEquals(conf.getDiasProf(), Main.configuracao.getDiasProf());
-		assertEquals(conf.getDiasTec(), Main.configuracao.getDiasTec());
+		Main.cadastrarConfiguracao(2.80, 2, 3, 4);;
+		Assert.assertEquals(2.80, Main.configuracao.getMulta(), 0.0 );
+		assertEquals(2, Main.configuracao.getDiasAluno());
+		assertEquals(3, Main.configuracao.getDiasProf());
+		assertEquals(4, Main.configuracao.getDiasTec());
 		Assert.assertNotNull(Main.configuracao);
-		Assert.assertNotNull(conf);
+	
 	}
-
 }

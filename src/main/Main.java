@@ -130,7 +130,7 @@ public class Main {
 	public static void configuracao() {
 		s2 = new Scanner(System.in);
 		s2.useLocale(Locale.US);
-		System.out.println("Cadastrar Configuracao ");
+		System.out.println("Cadastrar Configurao ");
 		System.out.println("Informe o valor da multa: ");
 		Double multa = s2.nextDouble();
 		System.out.println("Informe o prazo do aluguel para alunos ");
@@ -139,7 +139,16 @@ public class Main {
 		int prof = s2.nextInt();
 		System.out.println("Informe o prazo do aluguel para tecnico-administrativos  ");
 		int tec = s2.nextInt();
-		configuracao = new Configuracao(multa, alunos, prof, tec);
+		cadastrarConfiguracao(multa, alunos, prof, tec);
+	}
+	
+	public static void cadastrarConfiguracao(double multa, int alunos, int prof, int tec){
+		if((multa > 0) &&(alunos > 0) && (prof > 0) && (tec > 0)){
+			configuracao = new Configuracao(multa, alunos, prof, tec);
+			System.out.println("Configuracao cadastrada com sucesso!");
+		}else{
+			System.out.println("Esta configuracao e invalida!");
+		}
 	}
 
 }
