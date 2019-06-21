@@ -130,14 +130,14 @@ public class Main {
 	public static void configuracao() {
 		s2 = new Scanner(System.in);
 		s2.useLocale(Locale.US);
-		System.out.println("Cadastrar Configuração ");
+		System.out.println("Cadastrar Configuracao ");
 		System.out.println("Informe o valor da multa: ");
 		Double multa = s2.nextDouble();
 		System.out.println("Informe o prazo do aluguel para alunos ");
 		int alunos = s2.nextInt();
 		System.out.println("Informe o prazo do aluguel para professores ");
 		int prof = s2.nextInt();
-		System.out.println("Informe o prazo do aluguel para técnico-administrativos  ");
+		System.out.println("Informe o prazo do aluguel para tecnico-administrativos  ");
 		int tec = s2.nextInt();
 		configuracao = new Configuracao(multa, alunos, prof, tec);
 	}

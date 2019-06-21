@@ -11,7 +11,7 @@ import main.Main;
 public class TesteCadastroConfiguracao {
 
 	@Test
-	public void testaCadastroConfig() {
+	public void testaCadastroMulta() {
 		Main.configuracao();
 		Configuracao conf = new Configuracao(2.80, 2, 3, 4);
 		Assert.assertEquals(conf.getMulta(), Main.configuracao.getMulta(), 0.0 );
