@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
 	public static ArrayList<Locatario> locatarios = new ArrayList<Locatario>();
 	public static int matricula = 0;
 	private static Scanner s2;
-
+	public static Configuracao configuracao;
 	public static void main(String[] args) {
 		int op;
 
@@ -127,6 +128,18 @@ public class Main {
 	}
 
 	public static void configuracao() {
+		s2 = new Scanner(System.in);
+		s2.useLocale(Locale.US);
+		System.out.println("Cadastrar Configuração ");
+		System.out.println("Informe o valor da multa: ");
+		Double multa = s2.nextDouble();
+		System.out.println("Informe o prazo do aluguel para alunos ");
+		int alunos = s2.nextInt();
+		System.out.println("Informe o prazo do aluguel para professores ");
+		int prof = s2.nextInt();
+		System.out.println("Informe o prazo do aluguel para técnico-administrativos  ");
+		int tec = s2.nextInt();
+		configuracao = new Configuracao(multa, alunos, prof, tec);
 	}
 
 }
