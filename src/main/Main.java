@@ -2,6 +2,9 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -13,6 +16,7 @@ public class Main {
 	public static int matricula = 0;
 	private static Scanner s2;
 	public static Configuracao configuracao;
+
 	public static void main(String[] args) {
 		int op;
 
@@ -63,6 +67,38 @@ public class Main {
 	}
 
 	public static void relatorios() {
+		int op = 0;
+
+		while (op == 0) {
+
+			System.out.println(
+					"Relatorios: \n1 - Relatorios de locatario \n2 - Relatorios de exemplares \n3 - Relatorios de emprestimo.\n ");
+			String str = s2.nextLine();
+			op = Integer.parseInt(str);
+
+			if (op == 1) {
+				relatorioLocatarios();
+			} else if (op == 2) {
+
+			} else if (op == 3) {
+
+			} else if (op >= 4) {
+				System.out.println("Opcao errada!");
+				op = 0;
+			}
+		}
+	}
+
+	public static void relatorioLocatarios() {
+		System.out.println("Relatorio Locatarios ");
+		List<Locatario> locatariosOrdenado = locatarios;
+
+		Collections.sort(locatariosOrdenado);
+
+		for (int i = 0; i < locatarios.size(); i++) {
+
+		}
+
 	}
 
 	public static void pesquisar() {
@@ -70,7 +106,7 @@ public class Main {
 		System.out.println("1 - Pesquisar Locatario");
 		System.out.println("2 - Pesquisar Exemplar");
 		System.out.println("Digite a opcao de pesquisa: \n");
-		
+
 		int op = Integer.parseInt(s2.nextLine());
 		if (op == 1) {
 			System.out.println("Digite a matricula : ");
@@ -79,15 +115,16 @@ public class Main {
 
 			if (locatario != null) {
 				System.out.println("\nDados do Locatario\n");
-				System.out.println("  Nome: " + locatario.getNome() + "\n  Matricula: "+ locatario.getMatricula() + "\n  Categoria: "+ locatario.getCategoria() + "\n");
-				
-			}else {
+				System.out.println("  Nome: " + locatario.getNome() + "\n  Matricula: " + locatario.getMatricula()
+						+ "\n  Categoria: " + locatario.getCategoria() + "\n");
+
+			} else {
 				System.out.println("Não encontrado");
 			}
 			System.out.println("Aperte qualquer tecla para voltar!\n");
 			s2.nextLine();
-		}
 
+		}
 	}
 
 	public static Locatario pesquisarLocatario(int matricu) {
@@ -174,12 +211,12 @@ public class Main {
 		int tec = s2.nextInt();
 		cadastrarConfiguracao(multa, alunos, prof, tec);
 	}
-	
-	public static void cadastrarConfiguracao(double multa, int alunos, int prof, int tec){
-		if((multa > 0) &&(alunos > 0) && (prof > 0) && (tec > 0)){
+
+	public static void cadastrarConfiguracao(double multa, int alunos, int prof, int tec) {
+		if ((multa > 0) && (alunos > 0) && (prof > 0) && (tec > 0)) {
 			configuracao = new Configuracao(multa, alunos, prof, tec);
 			System.out.println("Configuracao cadastrada com sucesso!");
-		}else{
+		} else {
 			System.out.println("Esta configuracao e invalida!");
 		}
 	}

@@ -15,6 +15,11 @@ public class Locatario {
 
 	}
 	
+	@Override
+	public int compareTo(Locatario l) {
+	
+		return this.nome.compareTo(l.nome);
+	}
 
 	public int getMatricula() {
 		return matricula;
