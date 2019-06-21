@@ -11,7 +11,7 @@ public class TesteGeral {
 	public void testLocatario() {
 		testLocatario.pesquisarLocatario();
 		testLocatario.cadastrarLocatario();
-		
+		testeExemplar.cadastrarExemplar();
 	}
 
 }
