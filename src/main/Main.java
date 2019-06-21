@@ -65,21 +65,25 @@ public class Main {
 		Calendar dataAtual = Calendar.getInstance();
 		Calendar dataDev = Calendar.getInstance();
 		
-		do {
+		//do {
 			System.out.println("Informe a matricula do locatario: ");
 			int matricula = s2.nextInt();
 			loc = buscarLocatario(matricula);
-			if(loc == null) 
-				System.out.println("Locatario nao encontrado!");
-		}while(loc == null);
+			if(loc == null) { 
+				System.out.println("Locatario nao encontrado!\n");
+				return;
+				}
+		//}while(loc == null);
 		
-		do {
+		//do {
 			System.out.println("Informe o codigo do exemplar");
 			int codigo = s2.nextInt();
 			ex = buscarExemplar(codigo);
-			if(ex == null)
-				System.out.println("Exemplar nao encontrado!");
-		}while(ex == null);
+			if(ex == null) {
+				System.out.println("Exemplar nao encontrado!\n");
+				return;
+			}
+		//}while(ex == null);
 		
 		if(ex.disponivel()) {
 			ex.setQuantidade(ex.getQuantidade()-1);
