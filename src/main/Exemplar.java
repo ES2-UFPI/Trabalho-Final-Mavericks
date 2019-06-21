@@ -57,4 +57,12 @@ public abstract class Exemplar
 	{
 		alocado = newAlocado;
 	}
+	
+	
+	public boolean disponivel() {
+		if(this.quantidade<=0)
+			return false;
+		else
+			return true;
+	}
 }
