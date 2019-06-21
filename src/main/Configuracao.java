@@ -7,10 +7,10 @@ public class Configuracao {
 	private int diasTec;
 	private int diasAluno;
 	
-	public Configuracao(float multa, int diasTec, int diasProf, int diasAluno){
+	public Configuracao(double multa,int diasAluno , int diasProf,int diasTec ){
 		this.setDiasTec(diasTec);
-		this.setDiasAluno(diasProf);
 		this.setDiasAluno(diasAluno);
+		this.setDiasProf(diasProf);
 		this.setMulta(multa);
 	}
 	
