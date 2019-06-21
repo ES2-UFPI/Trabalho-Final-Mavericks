@@ -12,6 +12,7 @@ public class Main {
 	public static ArrayList<Exemplar> exemplares = new ArrayList<Exemplar>();
 	public static ArrayList<Locatario> locatarios = new ArrayList<Locatario>();
 	public static int matricula = 0;
+	public static int codigo = 0;
 	private static Scanner s2;
 	public static Configuracao configuracao;
 	public static void main(String[] args) {
@@ -93,7 +94,7 @@ public class Main {
 			dataDev.set(Calendar.MONTH,dataDev.get(Calendar.MONTH)+1);
 			
 			System.out.println("Emprestimo realizado com sucesso:\n"+ex.getTitulo()+" "+
-			ex.getAutorString()+"\nDevolver em: "+dataDev.get(Calendar.DAY_OF_MONTH)+"/"+
+			ex.getAutor()+"\nDevolver em: "+dataDev.get(Calendar.DAY_OF_MONTH)+"/"+
 			dataDev.get(Calendar.MONTH)+"/"+dataDev.get(Calendar.YEAR)+"\n");
 			
 			
@@ -283,7 +284,80 @@ public class Main {
 
 	}
 
-	public static void cadastrarExemplar() {
+	public static void cadastrarExemplar() 
+	{
+		System.out.println("\n1. Cadastrar Livro");
+		System.out.println("2. Cadastrar Artigo");
+		System.out.println("3. Sair");
+		
+		s2 = new Scanner(System.in);
+		
+		int op = Integer.parseInt(s2.nextLine());
+		
+		if (op != 1 && op != 2)
+			return;
+		
+		System.out.println("Titulo: ");
+		String titulo = s2.nextLine();
+		System.out.println("Autor: ");
+		String autor = s2.nextLine();
+		
+		if (op == 1)
+		{
+			System.out.println("Volume: ");
+			int volume = Integer.parseInt(s2.nextLine());
+			System.out.println("Paginas: ");
+			int paginas = Integer.parseInt(s2.nextLine());
+			System.out.println("Quantidade: ");
+			int quantidade = Integer.parseInt(s2.nextLine());
+			
+			cadastrarExemplar(titulo, autor, volume, paginas, quantidade);
+		}
+		else if (op == 2)
+		{
+			System.out.println("Revista: ");
+			String revista = s2.nextLine();
+			System.out.println("Quantidade: ");
+			int quantidade = Integer.parseInt(s2.nextLine());
+			
+			cadastrarExemplar(titulo, autor, revista, quantidade);
+		}
+	}
+	
+	public static void cadastrarExemplar (String titulo, String autor, int volume, int paginas, int quantidade)
+	{
+		for (Exemplar e : exemplares)
+		{
+			if (e.getTitulo().equals(titulo) && e.getAutor().equals(autor) && ((Livro)e).getVolume() == volume && ((Livro)e).getPaginas() == paginas)
+			{
+				e.setQuantidade(e.getQuantidade() + quantidade);
+				System.out.println("\nAdicionado ao estoque " + e.getTitulo() + " volume: " + ((Livro) e).getVolume());
+				return;
+			}
+		}
+		
+		codigo++;
+		Livro livro = new Livro(codigo, quantidade, titulo, autor, volume, paginas);
+		exemplares.add(livro);
+		System.out.println("\nLivro " + titulo + " volume " + volume + " cadastrado com sucesso!\n");
+	}
+	
+	public static void cadastrarExemplar (String titulo, String autor, String revista, int quantidade)
+	{
+		for (Exemplar e : exemplares)
+		{
+			if (e.getTitulo().equals(titulo) && e.getAutor().equals(autor) && ((Artigo)e).getRevista().contentEquals(revista))
+			{
+				e.setQuantidade(e.getQuantidade() + quantidade);
+				System.out.println("\nAdicionado ao estoque " + e.getTitulo() + " revista: " + ((Artigo) e).getRevista());
+				return;
+			}
+		}
+		
+		codigo++;
+		Artigo artigo = new Artigo(codigo, quantidade, titulo, autor, revista);
+		exemplares.add(artigo);
+		System.out.println("\nArtigo " + titulo + " revista " + revista + " cadastrado com sucesso!\n");
 	}
 
 	public static void configuracao() {
