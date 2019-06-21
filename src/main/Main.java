@@ -104,7 +104,7 @@ public class Main {
 	public static void alterarConfiguracao() {
 		s2 = new Scanner(System.in);
 		if(configuracao == null){
-			System.out.println("Não ha configuracoes cadastradas");
+			System.out.println("Nao ha configuracoes cadastradas");
 		}else{
 			int aux;
 			do{
