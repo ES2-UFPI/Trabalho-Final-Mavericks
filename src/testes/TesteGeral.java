@@ -14,6 +14,7 @@ public class TesteGeral {
 		testLocatario.cadastrarLocatario();
 		
 		testeExemplar.cadastrarExemplar();
+		testeExemplar.pesquisarExemplar();
 	}
 
 }

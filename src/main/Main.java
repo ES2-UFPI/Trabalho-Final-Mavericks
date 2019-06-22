@@ -135,8 +135,7 @@ public class Main {
 			System.out.println(
 					"Relatorios:\n \n1 - Relatorios de locatario \n2 - Relatorios de exemplares \n3 - Relatorios de emprestimo.\n ");
 			System.out.println("Digite a opcao: \n");
-			String str = s2.nextLine();
-			op = Integer.parseInt(str);
+			op = s2.nextInt();
 
 			if (op == 1) {
 				relatorioLocatarios();
@@ -169,14 +168,14 @@ public class Main {
 
 	public static void pesquisar() {
 		s2 = new Scanner(System.in);
-		System.out.println("1 - Pesquisar Locatario");
+		System.out.println("\n1 - Pesquisar Locatario");
 		System.out.println("2 - Pesquisar Exemplar");
-		System.out.println("Digite a opcao de pesquisa: \n");
+		System.out.println("Digite a opcao de pesquisa:");
 
-		int op = Integer.parseInt(s2.nextLine());
+		int op = s2.nextInt();
 		if (op == 1) {
 			System.out.println("Digite a matricula : ");
-			int matri = Integer.parseInt(s2.nextLine());
+			int matri = s2.nextInt();
 			Locatario locatario = pesquisarLocatario(matri);
 
 			if (locatario != null) {
@@ -191,6 +190,156 @@ public class Main {
 			s2.nextLine();
 
 		}
+		else if (op == 2)
+		{
+			System.out.println("\n1 - Pesquisar por codigo");
+			System.out.println("2 - Pesquisar por detalhes");
+			int op2 = s2.nextInt();
+			
+			if (op2 == 1)
+			{
+				System.out.println("\nDigite o codigo do exemplar: ");
+				int cod = s2.nextInt();
+				Exemplar e = pesquisarExemplar(cod);
+				
+				if (e != null)
+				{
+					if (e instanceof Livro)
+					{
+						imprimirLivro((Livro)e);
+					}
+					else 
+					{
+						imprimirArtigo((Artigo)e);
+					}
+				}
+				else 
+				{
+					System.out.println("\nNao existe exemplares com codigo " + cod + "!\n");
+				}
+			}
+			else if (op2 == 2)
+			{
+				System.out.println("\n1 - Pesquisar livro");
+				System.out.println("2 - Pesquisar artigo");
+				int op3 = s2.nextInt();
+				
+				s2 = new Scanner(System.in);
+				
+				if (op3 == 1)
+				{
+					System.out.println("\nTitulo: ");
+					String titulo = s2.nextLine();
+					System.out.println("Autor: ");
+					String autor = s2.nextLine();
+					System.out.println("Volume: ");
+					int volume = s2.nextInt();
+					System.out.println("Paginas: ");
+					int paginas = s2.nextInt();
+					Livro l = pesquisarExemplar(titulo, autor, volume, paginas);
+					
+					if (l != null)
+					{
+						System.out.println("\nCodigo: " + l.getCodigo());
+						System.out.println("Quantidade: " + l.getQuantidade());
+					}
+					else 
+					{
+						System.out.println("\nLivro nao encontrado!\n");
+					}
+				}
+				else if (op3 == 2)
+				{
+					System.out.println("\nTitulo: ");
+					String titulo = s2.nextLine();
+					System.out.println("Autor: ");
+					String autor = s2.nextLine();
+					System.out.println("Revista: ");
+					String revista = s2.nextLine();
+					Artigo a = pesquisarExemplar(titulo, autor, revista);
+					
+					if (a != null)
+					{
+						System.out.println("\nCodigo: " + a.getCodigo());
+						System.out.println("Quantidade: " + a.getQuantidade());
+					}
+					else 
+					{
+						System.out.println("\nArtigo nao encontrado!\n");
+					}
+				}
+			}
+		}
+	}
+	
+	public static void imprimirLivro (Livro l)
+	{
+		System.out.println("Codigo: " + l.getCodigo());
+		System.out.println("Autor: " + l.getAutor());
+		System.out.println("Titulo: " + l.getTitulo());
+		System.out.println("Volume: " + l.getVolume());
+		System.out.println("Paginas" + l.getPaginas());
+		System.out.println("Quantidade: " + l.getQuantidade());
+	}
+	
+	public static void imprimirArtigo (Artigo a)
+	{
+		System.out.println("Codigo: " + a.getCodigo());
+		System.out.println("Autor: " + a.getAutor());
+		System.out.println("Titulo: " + a.getTitulo());
+		System.out.println("Revista: " + a.getRevista());
+		System.out.println("Quantidade: " + a.getQuantidade());
+	}
+	
+	public static Artigo pesquisarExemplar (String titulo, String autor, String revista)
+	{
+		for (Exemplar e : exemplares) 
+		{
+			if (e instanceof Livro)
+				continue;
+			
+			if (((Artigo)e).getTitulo().equals(titulo) && ((Artigo)e).getAutor().equals(autor))
+			{
+				if (((Artigo)e).getRevista().equals(revista))
+				{
+					return (Artigo) e;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public static Livro pesquisarExemplar (String titulo, String autor, int volume, int paginas)
+	{
+		for (Exemplar e : exemplares) 
+		{
+			if (e instanceof Artigo)
+				continue;
+			
+			if (((Livro)e).getAutor().equals(autor) && ((Livro)e).getTitulo().equals(titulo))
+			{
+				if (((Livro)e).getVolume() == volume && ((Livro)e).getPaginas() == paginas)
+				{
+					return (Livro) e;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public static Exemplar pesquisarExemplar (int codigo)
+	{
+		for (Exemplar e : exemplares) 
+		{
+			if (e.getCodigo() == codigo)
+			{
+				return e;
+			}
+		}
+		
+		return null;
 	}
 
 	public static Locatario pesquisarLocatario(int matricu) {
@@ -276,7 +425,6 @@ public class Main {
 
 	public static void cadastrarLocatario() {
 		s2 = new Scanner(System.in);
-		;
 		int op = 0;
 
 		System.out.println("Cadastro de Locatario\n");
@@ -288,9 +436,8 @@ public class Main {
 			while (op == 0) {
 
 				System.out.println("Selecione sua categoria: \n1 - Aluno \n2 - Professor \n3 - Técnico Adm.\n ");
-				String str = s2.nextLine();
 
-				op = Integer.parseInt(str);
+				op = s2.nextInt();
 
 				if (op == 1) {
 					categoria = "Aluno";
@@ -328,16 +475,18 @@ public class Main {
 	}
 
 	public static void cadastrarExemplar() {
-		System.out.println("\n1. Cadastrar Livro");
-		System.out.println("2. Cadastrar Artigo");
-		System.out.println("3. Sair");
+		System.out.println("\n1 - Cadastrar Livro");
+		System.out.println("2 - Cadastrar Artigo");
+		System.out.println("3 - Sair");
 
 		s2 = new Scanner(System.in);
 
-		int op = Integer.parseInt(s2.nextLine());
+		int op = s2.nextInt();
 
 		if (op != 1 && op != 2)
 			return;
+		
+		s2 = new Scanner(System.in);
 
 		System.out.println("Titulo: ");
 		String titulo = s2.nextLine();
@@ -346,18 +495,18 @@ public class Main {
 
 		if (op == 1) {
 			System.out.println("Volume: ");
-			int volume = Integer.parseInt(s2.nextLine());
+			int volume = s2.nextInt();
 			System.out.println("Paginas: ");
-			int paginas = Integer.parseInt(s2.nextLine());
+			int paginas = s2.nextInt();
 			System.out.println("Quantidade: ");
-			int quantidade = Integer.parseInt(s2.nextLine());
+			int quantidade = s2.nextInt();
 
 			cadastrarExemplar(titulo, autor, volume, paginas, quantidade);
 		} else if (op == 2) {
 			System.out.println("Revista: ");
 			String revista = s2.nextLine();
 			System.out.println("Quantidade: ");
-			int quantidade = Integer.parseInt(s2.nextLine());
+			int quantidade = s2.nextInt();
 
 			cadastrarExemplar(titulo, autor, revista, quantidade);
 		}
@@ -376,6 +525,7 @@ public class Main {
 		codigo++;
 		Livro livro = new Livro(codigo, quantidade, titulo, autor, volume, paginas);
 		exemplares.add(livro);
+		System.out.println("\nCodigo: " + codigo);
 		System.out.println("\nLivro " + titulo + " volume " + volume + " cadastrado com sucesso!\n");
 	}
 
@@ -393,6 +543,7 @@ public class Main {
 		codigo++;
 		Artigo artigo = new Artigo(codigo, quantidade, titulo, autor, revista);
 		exemplares.add(artigo);
+		System.out.println("\nCodigo: " + codigo + "\n");
 		System.out.println("\nArtigo " + titulo + " revista " + revista + " cadastrado com sucesso!\n");
 	}
 
