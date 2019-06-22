@@ -20,17 +20,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		
-		//LEMBRAR DE APAGAR
-		Exemplar ex = new Livro(1, 3, "game of thones", "george", 2, 500);
-		exemplares.add(ex);
-		Locatario locs = new Locatario("joao", "Aluno", "1", 1);
-		Locatario locs2 = new Locatario("marcos", "Aluno", "1", 2);
-		locatarios.add(locs);
-		locatarios.add(locs2);
-		configuracao = new Configuracao(50,7,7,7);
-		//////
-		
 		int op;
 
 		do {
