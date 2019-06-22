@@ -10,7 +10,9 @@ public class TesteGeral {
 	@Test
 	public void testLocatario() {
 		testLocatario.pesquisarLocatario();
+		testLocatario.relatorioLocatario();
 		testLocatario.cadastrarLocatario();
+		
 		testeExemplar.cadastrarExemplar();
 	}
 

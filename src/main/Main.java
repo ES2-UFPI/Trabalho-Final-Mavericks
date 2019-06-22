@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -15,6 +17,7 @@ public class Main {
 	public static int codigo = 0;
 	private static Scanner s2;
 	public static Configuracao configuracao;
+
 	public static void main(String[] args) {
 		int op;
 
@@ -62,71 +65,106 @@ public class Main {
 		Scanner s2 = new Scanner(System.in);
 		Locatario loc = null;
 		Exemplar ex = null;
-		//Date data = new Date();
+		// Date data = new Date();
 		Calendar dataAtual = Calendar.getInstance();
 		Calendar dataDev = Calendar.getInstance();
-		
-		//do {
-			System.out.println("Informe a matricula do locatario: ");
-			int matricula = s2.nextInt();
-			loc = buscarLocatario(matricula);
-			if(loc == null) { 
-				System.out.println("Locatario nao encontrado!\n");
-				return;
-				}
-		//}while(loc == null);
-		
-		//do {
-			System.out.println("Informe o codigo do exemplar");
-			int codigo = s2.nextInt();
-			ex = buscarExemplar(codigo);
-			if(ex == null) {
-				System.out.println("Exemplar nao encontrado!\n");
-				return;
-			}
-		//}while(ex == null);
-		
-		if(ex.disponivel()) {
-			ex.setQuantidade(ex.getQuantidade()-1);
-			emprestimos.add( new Emprestimo(ex, loc, dataAtual, dataDev) );
-			
-			dataDev = calcularData(dataAtual,dataDev,loc);
-			dataDev.set(Calendar.MONTH,dataDev.get(Calendar.MONTH)+1);
-			
-			System.out.println("Emprestimo realizado com sucesso:\n"+ex.getTitulo()+" "+
-			ex.getAutor()+"\nDevolver em: "+dataDev.get(Calendar.DAY_OF_MONTH)+"/"+
-			dataDev.get(Calendar.MONTH)+"/"+dataDev.get(Calendar.YEAR)+"\n");
-			
-			
-		}else {
-			System.out.println("Nao ha exemplares disponiveis!\n");
-			
+
+		// do {
+		System.out.println("Informe a matricula do locatario: ");
+		int matricula = s2.nextInt();
+		loc = buscarLocatario(matricula);
+		if (loc == null) {
+			System.out.println("Locatario nao encontrado!\n");
+			return;
 		}
-		
+		// }while(loc == null);
+
+		// do {
+		System.out.println("Informe o codigo do exemplar");
+		int codigo = s2.nextInt();
+		ex = buscarExemplar(codigo);
+		if (ex == null) {
+			System.out.println("Exemplar nao encontrado!\n");
+			return;
+		}
+		// }while(ex == null);
+
+		if (ex.disponivel()) {
+			ex.setQuantidade(ex.getQuantidade() - 1);
+			emprestimos.add(new Emprestimo(ex, loc, dataAtual, dataDev));
+
+			dataDev = calcularData(dataAtual, dataDev, loc);
+			dataDev.set(Calendar.MONTH, dataDev.get(Calendar.MONTH) + 1);
+
+			System.out.println("Emprestimo realizado com sucesso:\n" + ex.getTitulo() + " " + ex.getAutor()
+					+ "\nDevolver em: " + dataDev.get(Calendar.DAY_OF_MONTH) + "/" + dataDev.get(Calendar.MONTH) + "/"
+					+ dataDev.get(Calendar.YEAR) + "\n");
+
+		} else {
+			System.out.println("Nao ha exemplares disponiveis!\n");
+
+		}
+
 	}
 
-
-	public static Calendar calcularData(Calendar dataAtual,Calendar dataDev,Locatario loc) {
-		int dias=0;
-		if(loc.getCategoria().equals("Aluno")) {
+	public static Calendar calcularData(Calendar dataAtual, Calendar dataDev, Locatario loc) {
+		int dias = 0;
+		if (loc.getCategoria().equals("Aluno")) {
 			dias = configuracao.getDiasAluno();
-			
-		}else if(loc.getCategoria().equals("Professor")) {
+
+		} else if (loc.getCategoria().equals("Professor")) {
 			dias = configuracao.getDiasProf();
-			
-		}else if(loc.getCategoria().equals("Tecnico Adm.")) {
+
+		} else if (loc.getCategoria().equals("Tecnico Adm.")) {
 			dias = configuracao.getDiasTec();
 		}
-		
-		dataDev.set(Calendar.DAY_OF_MONTH, dataAtual.get(Calendar.DAY_OF_MONTH)+dias);
+
+		dataDev.set(Calendar.DAY_OF_MONTH, dataAtual.get(Calendar.DAY_OF_MONTH) + dias);
 
 		return dataDev;
 	}
-	
+
 	public static void devolucao() {
 	}
 
 	public static void relatorios() {
+		int op = 0;
+
+		while (op == 0) {
+
+			System.out.println(
+					"Relatorios:\n \n1 - Relatorios de locatario \n2 - Relatorios de exemplares \n3 - Relatorios de emprestimo.\n ");
+			System.out.println("Digite a opcao: \n");
+			String str = s2.nextLine();
+			op = Integer.parseInt(str);
+
+			if (op == 1) {
+				relatorioLocatarios();
+			} else if (op == 2) {
+
+			} else if (op == 3) {
+
+			} else if (op >= 4) {
+				System.out.println("Opcao errada!");
+				op = 0;
+			}
+		}
+		System.out.println("Aperte qualquer tecla para voltar!\n");
+		s2.nextLine();
+	}
+
+	public static List relatorioLocatarios() {
+		System.out.println("Relatorio Locatarios ");
+
+		List<Locatario> lista = new ArrayList<Locatario>(locatarios);
+		lista.sort(Comparator.comparing(Locatario::getNome));
+
+		for (int i = 0; i < locatarios.size(); i++) {
+
+			System.out.println("  Nome: " + lista.get(i).getNome() + "\n  Matricula: " + lista.get(i).getMatricula()
+					+ "\n  Categoria: " + lista.get(i).getCategoria() + "\n");
+		}
+		return lista;
 	}
 
 	public static void pesquisar() {
@@ -134,7 +172,7 @@ public class Main {
 		System.out.println("1 - Pesquisar Locatario");
 		System.out.println("2 - Pesquisar Exemplar");
 		System.out.println("Digite a opcao de pesquisa: \n");
-		
+
 		int op = Integer.parseInt(s2.nextLine());
 		if (op == 1) {
 			System.out.println("Digite a matricula : ");
@@ -143,15 +181,16 @@ public class Main {
 
 			if (locatario != null) {
 				System.out.println("\nDados do Locatario\n");
-				System.out.println("  Nome: " + locatario.getNome() + "\n  Matricula: "+ locatario.getMatricula() + "\n  Categoria: "+ locatario.getCategoria() + "\n");
-				
-			}else {
+				System.out.println("  Nome: " + locatario.getNome() + "\n  Matricula: " + locatario.getMatricula()
+						+ "\n  Categoria: " + locatario.getCategoria() + "\n");
+
+			} else {
 				System.out.println("Não encontrado");
 			}
 			System.out.println("Aperte qualquer tecla para voltar!\n");
 			s2.nextLine();
-		}
 
+		}
 	}
 
 	public static Locatario pesquisarLocatario(int matricu) {
@@ -167,64 +206,68 @@ public class Main {
 
 	public static void alterarConfiguracao() {
 		s2 = new Scanner(System.in);
-		if(configuracao == null){
+		if (configuracao == null) {
 			System.out.println("Nao ha configuracoes cadastradas");
-		}else{
+		} else {
 			int aux;
-			do{
-			Menu mainMenu = new Menu("Alterar Configuracao", Arrays.asList("Multa", "Prazo de alunos", "Prazo de professores",
-					"Prazo de tecnicos administrativos", "Sair"));
-			aux = mainMenu.getSelection();
-			if(aux == 1){
-				System.out.println("Digite o valor da nova multa: ");
-				double multa = s2.nextDouble();
-				if(multa <= 0){
-					System.out.println("Valor da multa invalido!");
-				}else{
-					alterarConfiguracaom(aux, multa);
+			do {
+				Menu mainMenu = new Menu("Alterar Configuracao", Arrays.asList("Multa", "Prazo de alunos",
+						"Prazo de professores", "Prazo de tecnicos administrativos", "Sair"));
+				aux = mainMenu.getSelection();
+				if (aux == 1) {
+					System.out.println("Digite o valor da nova multa: ");
+					double multa = s2.nextDouble();
+					if (multa <= 0) {
+						System.out.println("Valor da multa invalido!");
+					} else {
+						alterarConfiguracaom(aux, multa);
+					}
 				}
-			}if(aux == 2){
-				System.out.println("Digite o valor do novo prazo para alunos: ");
-				int alu = s2.nextInt();
-				if(alu <= 0){
-					System.out.println("Valor do prazo invalido!");
-				}else{
-					alterarConfiguracaod(aux, alu);				}
-			}if(aux == 3){
-				System.out.println("Digite o valor do novo prazo para professores: ");
-				int prof = s2.nextInt();
-				if(prof <= 0){
-					System.out.println("Valor do prazo invalido!");
-				}else{
-					alterarConfiguracaod(aux, prof);
+				if (aux == 2) {
+					System.out.println("Digite o valor do novo prazo para alunos: ");
+					int alu = s2.nextInt();
+					if (alu <= 0) {
+						System.out.println("Valor do prazo invalido!");
+					} else {
+						alterarConfiguracaod(aux, alu);
+					}
 				}
-			}if(aux == 4){
-				System.out.println("Digite o valor do novo prazo para tecnico-administrativos: ");
-				int tec = s2.nextInt();
-				if(tec <= 0){
-					System.out.println("Valor do prazo invalido!");
-				}else{
-					alterarConfiguracaod(aux, tec);
+				if (aux == 3) {
+					System.out.println("Digite o valor do novo prazo para professores: ");
+					int prof = s2.nextInt();
+					if (prof <= 0) {
+						System.out.println("Valor do prazo invalido!");
+					} else {
+						alterarConfiguracaod(aux, prof);
+					}
 				}
-			}
-			}while(aux != 5);
+				if (aux == 4) {
+					System.out.println("Digite o valor do novo prazo para tecnico-administrativos: ");
+					int tec = s2.nextInt();
+					if (tec <= 0) {
+						System.out.println("Valor do prazo invalido!");
+					} else {
+						alterarConfiguracaod(aux, tec);
+					}
+				}
+			} while (aux != 5);
 		}
 	}
-	
-	public static void alterarConfiguracaom(int aux, double multa){
+
+	public static void alterarConfiguracaom(int aux, double multa) {
 		configuracao.setMulta(multa);
 		System.out.println("Valor da multa alterado!");
 	}
-	
-	public static void alterarConfiguracaod(int aux, int dias){
-		switch(aux){
-		case 2: 
+
+	public static void alterarConfiguracaod(int aux, int dias) {
+		switch (aux) {
+		case 2:
 			configuracao.setDiasAluno(dias);
 			break;
 		case 3:
 			configuracao.setDiasProf(dias);
 			break;
-		case 4: 
+		case 4:
 			configuracao.setDiasTec(dias);
 			break;
 		}
@@ -284,76 +327,69 @@ public class Main {
 
 	}
 
-	public static void cadastrarExemplar() 
-	{
+	public static void cadastrarExemplar() {
 		System.out.println("\n1. Cadastrar Livro");
 		System.out.println("2. Cadastrar Artigo");
 		System.out.println("3. Sair");
-		
+
 		s2 = new Scanner(System.in);
-		
+
 		int op = Integer.parseInt(s2.nextLine());
-		
+
 		if (op != 1 && op != 2)
 			return;
-		
+
 		System.out.println("Titulo: ");
 		String titulo = s2.nextLine();
 		System.out.println("Autor: ");
 		String autor = s2.nextLine();
-		
-		if (op == 1)
-		{
+
+		if (op == 1) {
 			System.out.println("Volume: ");
 			int volume = Integer.parseInt(s2.nextLine());
 			System.out.println("Paginas: ");
 			int paginas = Integer.parseInt(s2.nextLine());
 			System.out.println("Quantidade: ");
 			int quantidade = Integer.parseInt(s2.nextLine());
-			
+
 			cadastrarExemplar(titulo, autor, volume, paginas, quantidade);
-		}
-		else if (op == 2)
-		{
+		} else if (op == 2) {
 			System.out.println("Revista: ");
 			String revista = s2.nextLine();
 			System.out.println("Quantidade: ");
 			int quantidade = Integer.parseInt(s2.nextLine());
-			
+
 			cadastrarExemplar(titulo, autor, revista, quantidade);
 		}
 	}
-	
-	public static void cadastrarExemplar (String titulo, String autor, int volume, int paginas, int quantidade)
-	{
-		for (Exemplar e : exemplares)
-		{
-			if (e.getTitulo().equals(titulo) && e.getAutor().equals(autor) && ((Livro)e).getVolume() == volume && ((Livro)e).getPaginas() == paginas)
-			{
+
+	public static void cadastrarExemplar(String titulo, String autor, int volume, int paginas, int quantidade) {
+		for (Exemplar e : exemplares) {
+			if (e.getTitulo().equals(titulo) && e.getAutor().equals(autor) && ((Livro) e).getVolume() == volume
+					&& ((Livro) e).getPaginas() == paginas) {
 				e.setQuantidade(e.getQuantidade() + quantidade);
 				System.out.println("\nAdicionado ao estoque " + e.getTitulo() + " volume: " + ((Livro) e).getVolume());
 				return;
 			}
 		}
-		
+
 		codigo++;
 		Livro livro = new Livro(codigo, quantidade, titulo, autor, volume, paginas);
 		exemplares.add(livro);
 		System.out.println("\nLivro " + titulo + " volume " + volume + " cadastrado com sucesso!\n");
 	}
-	
-	public static void cadastrarExemplar (String titulo, String autor, String revista, int quantidade)
-	{
-		for (Exemplar e : exemplares)
-		{
-			if (e.getTitulo().equals(titulo) && e.getAutor().equals(autor) && ((Artigo)e).getRevista().contentEquals(revista))
-			{
+
+	public static void cadastrarExemplar(String titulo, String autor, String revista, int quantidade) {
+		for (Exemplar e : exemplares) {
+			if (e.getTitulo().equals(titulo) && e.getAutor().equals(autor)
+					&& ((Artigo) e).getRevista().contentEquals(revista)) {
 				e.setQuantidade(e.getQuantidade() + quantidade);
-				System.out.println("\nAdicionado ao estoque " + e.getTitulo() + " revista: " + ((Artigo) e).getRevista());
+				System.out
+						.println("\nAdicionado ao estoque " + e.getTitulo() + " revista: " + ((Artigo) e).getRevista());
 				return;
 			}
 		}
-		
+
 		codigo++;
 		Artigo artigo = new Artigo(codigo, quantidade, titulo, autor, revista);
 		exemplares.add(artigo);
@@ -374,33 +410,32 @@ public class Main {
 		int tec = s2.nextInt();
 		cadastrarConfiguracao(multa, alunos, prof, tec);
 	}
-	
-	public static void cadastrarConfiguracao(double multa, int alunos, int prof, int tec){
-		if((multa > 0) &&(alunos > 0) && (prof > 0) && (tec > 0)){
+
+	public static void cadastrarConfiguracao(double multa, int alunos, int prof, int tec) {
+		if ((multa > 0) && (alunos > 0) && (prof > 0) && (tec > 0)) {
 			configuracao = new Configuracao(multa, alunos, prof, tec);
 			System.out.println("Configuracao cadastrada com sucesso!");
-		}else{
+		} else {
 			System.out.println("Esta configuracao e invalida!");
 		}
 	}
 
 	public static Locatario buscarLocatario(int matricula) {
-		for(Locatario x:locatarios) {
-			if(x.getMatricula()==matricula) {
+		for (Locatario x : locatarios) {
+			if (x.getMatricula() == matricula) {
 				return x;
 			}
 		}
 		return null;
 	}
-	
+
 	public static Exemplar buscarExemplar(int cod) {
-		for(Exemplar x:exemplares) {
-			if(x.getCodigo()==cod) {
+		for (Exemplar x : exemplares) {
+			if (x.getCodigo() == cod) {
 				return x;
 			}
 		}
 		return null;
 	}
-	
-	
+
 }

@@ -2,6 +2,8 @@ package testes;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import main.Locatario;
@@ -24,6 +26,7 @@ public class TesteLocatario {
 		assertEquals("gui", Main.locatarios.get(3).getNome());
 		assertEquals("Professor", Main.locatarios.get(3).getCategoria());
 		assertEquals("234", Main.locatarios.get(3).getSenha());
+		
 		
 	}
 	
@@ -51,10 +54,19 @@ public class TesteLocatario {
 		assertEquals("Aluno",l.getCategoria());
 		assertEquals("123", l.getSenha());
 		
+	}
+	
+	@Test
+	public void relatorioLocatario() {
+		@SuppressWarnings("unchecked")
+		List<Locatario> lista = Main.relatorioLocatarios();
+		assertEquals("joao", lista.get(0).getNome());
+		assertEquals("Professor", lista.get(0).getCategoria());
+		assertEquals("234", lista.get(0).getSenha());
 		
-
-		
-
+		assertEquals("neto", lista.get(1).getNome());
+		assertEquals("Aluno", lista.get(1).getCategoria());
+		assertEquals("123", lista.get(1).getSenha());
 	}
 	
 	
