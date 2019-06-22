@@ -192,7 +192,7 @@ public class Main {
 		}
 		else if (op == 2)
 		{
-			System.out.println("\n1 - Pesquisar por código");
+			System.out.println("\n1 - Pesquisar por codigo");
 			System.out.println("2 - Pesquisar por detalhes");
 			int op2 = s2.nextInt();
 			
@@ -245,7 +245,7 @@ public class Main {
 					}
 					else 
 					{
-						System.out.println("\nLivro não encontrado!\n");
+						System.out.println("\nLivro nao encontrado!\n");
 					}
 				}
 				else if (op3 == 2)
@@ -265,7 +265,7 @@ public class Main {
 					}
 					else 
 					{
-						System.out.println("\nArtigo não encontrado!\n");
+						System.out.println("\nArtigo nao encontrado!\n");
 					}
 				}
 			}
