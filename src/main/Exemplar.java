@@ -23,7 +23,7 @@ public abstract class Exemplar
 		return titulo;
 	}
 	
-	public String getAutorString ()
+	public String getAutor ()
 	{
 		return autor;
 	}
@@ -56,5 +56,13 @@ public abstract class Exemplar
 	public void setAlocado (boolean newAlocado)
 	{
 		alocado = newAlocado;
+	}
+	
+	
+	public boolean disponivel() {
+		if(this.quantidade<=0)
+			return false;
+		else
+			return true;
 	}
 }
