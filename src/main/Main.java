@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	private static ArrayList<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
+	public static ArrayList<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
 	public static ArrayList<Exemplar> exemplares = new ArrayList<Exemplar>();
 	public static ArrayList<Locatario> locatarios = new ArrayList<Locatario>();
 	public static int matricula = 0;
@@ -19,6 +19,7 @@ public class Main {
 	public static Configuracao configuracao;
 
 	public static void main(String[] args) {
+		
 		int op;
 
 		do {
@@ -69,6 +70,10 @@ public class Main {
 		Calendar dataAtual = Calendar.getInstance();
 		Calendar dataDev = Calendar.getInstance();
 
+		if(configuracao==null) {
+			System.out.println("Nenhuma configuracao foi cadastrada!\n");
+			return;
+		}
 		// do {
 		System.out.println("Informe a matricula do locatario: ");
 		int matricula = s2.nextInt();
@@ -96,7 +101,7 @@ public class Main {
 			dataDev = calcularData(dataAtual, dataDev, loc);
 			dataDev.set(Calendar.MONTH, dataDev.get(Calendar.MONTH) + 1);
 
-			System.out.println("Emprestimo realizado com sucesso:\n" + ex.getTitulo() + " " + ex.getAutor()
+			System.out.println("\nEmprestimo realizado com sucesso!\nTitulo: " + ex.getTitulo() + "; " + ex.getAutor()
 					+ "\nDevolver em: " + dataDev.get(Calendar.DAY_OF_MONTH) + "/" + dataDev.get(Calendar.MONTH) + "/"
 					+ dataDev.get(Calendar.YEAR) + "\n");
 
@@ -128,28 +133,25 @@ public class Main {
 	}
 
 	public static void relatorios() {
-		int op = 0;
+		int op;
 
-		while (op == 0) {
-
-			System.out.println(
-					"Relatorios:\n \n1 - Relatorios de locatario \n2 - Relatorios de exemplares \n3 - Relatorios de emprestimo.\n ");
-			System.out.println("Digite a opcao: \n");
-			op = s2.nextInt();
-
+	do {
+			Menu mainMenu = new Menu("Relatorios", Arrays.asList("Relatorios de locatario", "Relatorios de exemplares", "Relatorios de emprestimo",
+					 "Sair"));
+			op = mainMenu.getSelection();
+			
 			if (op == 1) {
 				relatorioLocatarios();
 			} else if (op == 2) {
 
 			} else if (op == 3) {
-
-			} else if (op >= 4) {
-				System.out.println("Opcao errada!");
-				op = 0;
+				relatorioEmprestimos();
+			} else if (op == 4) {
+				return;
 			}
-		}
-		System.out.println("Aperte qualquer tecla para voltar!\n");
-		s2.nextLine();
+		}while(op!=4);
+		//System.out.println("Aperte qualquer tecla para voltar!\n");
+		//s2.nextLine();
 	}
 
 	public static List relatorioLocatarios() {
@@ -353,6 +355,75 @@ public class Main {
 
 	}
 
+	public static void relatorioEmprestimos() {
+		int op ;
+
+		do {
+			
+			Menu mainMenu = new Menu("\nRelatorio Emprestimos:", Arrays.asList("Geral", "Por Locatario",
+					 "Sair"));
+			op = mainMenu.getSelection();
+			
+		
+			if (op == 1) {
+				relatorioEmprestimoGeral();
+			} else if (op == 2) {
+				relatorioEmprestimoLocatario();
+			}else if(op==3) {
+				return;
+			}
+		}while(op!=3);
+		
+	}
+	
+    public static List	relatorioEmprestimoGeral() {
+    	System.out.println("Relatorio Geral De Emprestimos:");
+    	int temp;
+    	ArrayList<Emprestimo> lista = new ArrayList<Emprestimo>(emprestimos);
+    	lista.sort(Comparator.comparing(Emprestimo::getData_emp));
+    	for(Emprestimo x : lista) {
+    		temp = x.getData_emp().get(Calendar.MONTH)+1;
+    		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
+    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
+    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
+    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
+    			"\nData de Devolucao: "+
+    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
+    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
+    	}
+    	
+		return lista;
+    	
+    }
+    public static void	relatorioEmprestimoLocatario() {
+    	int op,temp;
+    	Locatario loc;
+    	s2 = new Scanner(System.in);
+    	System.out.println("Digite a matricula do Locatario: ");
+    	op = s2.nextInt();
+    	loc = buscarLocatario(op);
+    	if(loc==null) {
+    		System.out.println("Locatario nao encontrado!\n");
+    		return;
+    	}else {
+    		System.out.println("\nRelatorio de emprestimos de "+loc.getNome()+":");
+    		for(Emprestimo x:emprestimos) {
+    			if(x.getLocatario().getMatricula()==loc.getMatricula()) {
+    				temp = x.getData_emp().get(Calendar.MONTH)+1;
+    	    		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
+    	    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
+    	    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
+    	    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
+    	    			"\nData de Devolucao: "+
+    	    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
+    	    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
+    			}
+    		}
+    	}
+    	
+    	
+    	
+    }
 	public static void alterarConfiguracao() {
 		s2 = new Scanner(System.in);
 		if (configuracao == null) {
