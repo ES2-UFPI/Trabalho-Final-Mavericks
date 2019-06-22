@@ -2,6 +2,8 @@ package testes;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import main.Artigo;
@@ -72,5 +74,26 @@ public class TesteExemplar
 		Exemplar e4 = Main.pesquisarExemplar("Libras", "Joao", "Cultura");
 		assertEquals(2, e4.getQuantidade());
 		assertEquals(2, e4.getCodigo());
+	}
+	
+	@Test
+	public void relatorioExemplar ()
+	{
+		System.out.println("\nTeste relatorio exemplar");
+		
+		List<Exemplar> list = Main.relatorioExemplares();
+		
+		assertEquals(true, list.get(0) instanceof Livro);
+		assertEquals("Computacao", list.get(0).getTitulo());
+		assertEquals("Lucas", list.get(0).getAutor());
+		assertEquals(1, ((Livro)list.get(0)).getVolume());
+		assertEquals(10, ((Livro)list.get(0)).getPaginas());
+		assertEquals(4, list.get(0).getQuantidade());
+		
+		assertEquals(true, list.get(1) instanceof Artigo);
+		assertEquals("Libras", list.get(1).getTitulo());
+		assertEquals("Joao", list.get(1).getAutor());
+		assertEquals("Cultura", ((Artigo)list.get(1)).getRevista());
+		assertEquals(2, list.get(1).getQuantidade());
 	}
 }
