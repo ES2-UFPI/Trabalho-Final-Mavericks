@@ -13,9 +13,13 @@ public class TesteGeral {
 		testLocatario.pesquisarLocatario();
 		testLocatario.relatorioLocatario();
 		testLocatario.cadastrarLocatario();
-		
+	}
+	
+	@Test
+	public void testExemplar ()
+	{
 		testeExemplar.cadastrarExemplar();
+		testeExemplar.relatorioExemplar();
 		testeExemplar.pesquisarExemplar();
 	}
-
 }

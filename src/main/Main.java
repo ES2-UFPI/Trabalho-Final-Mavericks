@@ -135,7 +135,7 @@ public class Main {
 	public static void relatorios() {
 		int op;
 
-	do {
+		do {
 			Menu mainMenu = new Menu("Relatorios", Arrays.asList("Relatorios de locatario", "Relatorios de exemplares", "Relatorios de emprestimo",
 					 "Sair"));
 			op = mainMenu.getSelection();
@@ -143,7 +143,7 @@ public class Main {
 			if (op == 1) {
 				relatorioLocatarios();
 			} else if (op == 2) {
-
+				relatorioExemplares();
 			} else if (op == 3) {
 				relatorioEmprestimos();
 			} else if (op == 4) {
@@ -165,6 +165,38 @@ public class Main {
 			System.out.println("  Nome: " + lista.get(i).getNome() + "\n  Matricula: " + lista.get(i).getMatricula()
 					+ "\n  Categoria: " + lista.get(i).getCategoria() + "\n");
 		}
+		return lista;
+	}
+	
+	public static List relatorioExemplares ()
+	{	
+		List<Exemplar> lista = exemplares;
+		lista.sort(Comparator.comparing(Exemplar::getTitulo));
+		
+		if (lista.isEmpty())
+		{
+			System.out.println("\nNenhum exemplar cadastrado!\n");
+			return lista;
+		}
+		
+		System.out.println("\nRelatorio Exemplares\n");
+		
+		for (Exemplar e : lista) 
+		{
+			if (e instanceof Livro)
+			{
+				System.out.println("Livro");
+				imprimirLivro((Livro)e);
+			}
+			else 
+			{
+				System.out.println("Artigo");
+				imprimirArtigo((Artigo)e);
+			}
+			
+			System.out.println("\n");
+		}
+		
 		return lista;
 	}
 
@@ -277,18 +309,18 @@ public class Main {
 	public static void imprimirLivro (Livro l)
 	{
 		System.out.println("Codigo: " + l.getCodigo());
-		System.out.println("Autor: " + l.getAutor());
 		System.out.println("Titulo: " + l.getTitulo());
+		System.out.println("Autor: " + l.getAutor());
 		System.out.println("Volume: " + l.getVolume());
-		System.out.println("Paginas" + l.getPaginas());
+		System.out.println("Paginas: " + l.getPaginas());
 		System.out.println("Quantidade: " + l.getQuantidade());
 	}
 	
 	public static void imprimirArtigo (Artigo a)
 	{
 		System.out.println("Codigo: " + a.getCodigo());
-		System.out.println("Autor: " + a.getAutor());
 		System.out.println("Titulo: " + a.getTitulo());
+		System.out.println("Autor: " + a.getAutor());
 		System.out.println("Revista: " + a.getRevista());
 		System.out.println("Quantidade: " + a.getQuantidade());
 	}
