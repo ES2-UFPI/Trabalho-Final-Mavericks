@@ -7,8 +7,6 @@ import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
 import main.Configuracao;
 import main.Emprestimo;
 import main.Livro;
