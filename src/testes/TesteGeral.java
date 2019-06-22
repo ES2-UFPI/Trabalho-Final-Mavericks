@@ -7,6 +7,7 @@ public class TesteGeral {
 	TesteLocatario testLocatario = new TesteLocatario();
 	TesteExemplar testeExemplar = new TesteExemplar();
 
+
 	@Test
 	public void testLocatario() {
 		testLocatario.pesquisarLocatario();
@@ -14,6 +15,9 @@ public class TesteGeral {
 		testLocatario.cadastrarLocatario();
 		
 		testeExemplar.cadastrarExemplar();
+		
+	
+		
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	private static ArrayList<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
+	public static ArrayList<Emprestimo> emprestimos = new ArrayList<Emprestimo>();
 	public static ArrayList<Exemplar> exemplares = new ArrayList<Exemplar>();
 	public static ArrayList<Locatario> locatarios = new ArrayList<Locatario>();
 	public static int matricula = 0;
@@ -24,8 +24,10 @@ public class Main {
 		//LEMBRAR DE APAGAR
 		Exemplar ex = new Livro(1, 3, "game of thones", "george", 2, 500);
 		exemplares.add(ex);
-		Locatario loc = new Locatario("joao", "Aluno", "1", 1);
-		locatarios.add(loc);
+		Locatario locs = new Locatario("joao", "Aluno", "1", 1);
+		Locatario locs2 = new Locatario("marcos", "Aluno", "1", 2);
+		locatarios.add(locs);
+		locatarios.add(locs2);
 		configuracao = new Configuracao(50,7,7,7);
 		//////
 		
@@ -236,10 +238,12 @@ public class Main {
 		
 	}
 	
-    public static void	relatorioEmprestimoGeral() {
-    	System.out.println("Relatorio Geral De emprestimos:");
+    public static List	relatorioEmprestimoGeral() {
+    	System.out.println("Relatorio Geral De Emprestimos:");
     	int temp;
-    	for(Emprestimo x : emprestimos) {
+    	ArrayList<Emprestimo> lista = new ArrayList<Emprestimo>(emprestimos);
+    	lista.sort(Comparator.comparing(Emprestimo::getData_emp));
+    	for(Emprestimo x : lista) {
     		temp = x.getData_emp().get(Calendar.MONTH)+1;
     		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
     			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
@@ -250,10 +254,36 @@ public class Main {
     			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
     	}
     	
-		return;
+		return lista;
     	
     }
     public static void	relatorioEmprestimoLocatario() {
+    	int op,temp;
+    	Locatario loc;
+    	s2 = new Scanner(System.in);
+    	System.out.println("Digite a matricula do Locatario: ");
+    	op = s2.nextInt();
+    	loc = buscarLocatario(op);
+    	if(loc==null) {
+    		System.out.println("Locatario nao encontrado!\n");
+    		return;
+    	}else {
+    		System.out.println("\nRelatorio de emprestimos de "+loc.getNome()+":");
+    		for(Emprestimo x:emprestimos) {
+    			if(x.getLocatario().getMatricula()==loc.getMatricula()) {
+    				temp = x.getData_emp().get(Calendar.MONTH)+1;
+    	    		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
+    	    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
+    	    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
+    	    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
+    	    			"\nData de Devolucao: "+
+    	    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
+    	    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
+    			}
+    		}
+    	}
+    	
+    	
     	
     }
 	public static void alterarConfiguracao() {
