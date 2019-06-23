@@ -2,6 +2,7 @@ package main;
 
 public class Locatario {
 
+	
 	int matricula;
 	String nome;
 	String categoria;
@@ -9,12 +10,11 @@ public class Locatario {
 
 	public Locatario(String nome, String categoria, String senha, int matricula) {
 		this.nome = nome;
-		this.categoria =  categoria;
+		this.categoria = categoria;
 		this.senha = senha;
 		this.matricula = matricula;
 
 	}
-	
 
 	public int getMatricula() {
 		return matricula;

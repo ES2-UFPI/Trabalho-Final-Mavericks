@@ -11,11 +11,20 @@ public class TesteGeral {
 	TesteCalculaMulta testeCalculaMulta = new TesteCalculaMulta();
 	TesteConfiguracao testeConfiguracao = new TesteConfiguracao();
 
+
 	@Test
 	public void testLocatario() {
 		testLocatario.pesquisarLocatario();
+		testLocatario.relatorioLocatario();
 		testLocatario.cadastrarLocatario();
+	}
+	
+	@Test
+	public void testExemplar ()
+	{
 		testeExemplar.cadastrarExemplar();
+		testeExemplar.relatorioExemplar();
+		testeExemplar.pesquisarExemplar();
 	}
 	
 	@Test
@@ -44,5 +53,4 @@ public class TesteGeral {
 		testeCalculaMulta.CalculaMultaForaDoPrazo();
 		testeCalculaMulta.CalculaMultaNoPrazo();
 	}
-
 }
