@@ -16,18 +16,6 @@ import main.Main;
 
 public class TesteEmprestimo {
 	
-	
-   //Livro exemplar ;
-   //Locatario locatario;
-   //Locatario locatario2;
-   //Emprestimo em;
-   //Emprestimo em2; 
-   //Calendar atual = Calendar.getInstance();
-   //Calendar devolucao = Calendar.getInstance();
-	//@Before
-	//public void setUp() throws Exception {
-		
-	//}
 
 	@Test
 	public void testEmprestimo() {
@@ -36,17 +24,10 @@ public class TesteEmprestimo {
 		Calendar devolucao = Calendar.getInstance();
 		
 		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
-		
-		
-		Locatario locatario2 = new Locatario("marcos", "Aluno", "123", 2);
-		
-		
+	
 		Main.configuracao = new Configuracao(50,7 ,7,7);
 		
-		Emprestimo em = new Emprestimo(exemplar,locatario,atual,devolucao);
-		Emprestimo em2 = new Emprestimo(exemplar,locatario2,atual,devolucao);
-		Main.emprestimos.add(em);
-		Main.emprestimos.add(em2);
+		Emprestimo em = Main.emprestimo(locatario, exemplar, atual, devolucao);
 		
 		
 		assertEquals(exemplar,em.getExemplar());
@@ -54,7 +35,7 @@ public class TesteEmprestimo {
 		assertEquals(atual,em.getData_emp());
 		assertEquals(devolucao,em.getData_dev());
 		Main.emprestimos.remove(em);
-		Main.emprestimos.remove(em2);
+	
 	}
 
 	@Test
@@ -97,8 +78,8 @@ public class TesteEmprestimo {
 		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
 		Locatario locatario2 = new Locatario("marcos", "Aluno", "123", 2);
 		Main.configuracao = new Configuracao(50,7 ,7,7);
-		Emprestimo em = new Emprestimo(exemplar,locatario,atual,devolucao);
-		Emprestimo em2 = new Emprestimo(exemplar,locatario2,atual,devolucao);
+		Emprestimo em = Main.emprestimo(locatario,exemplar,atual,devolucao);
+		Emprestimo em2 = Main.emprestimo(locatario2,exemplar,atual,devolucao);
 		devolucao = Main.calcularData(atual, devolucao, locatario);
 		Main.emprestimos.add(em);
 		Main.emprestimos.add(em2);
