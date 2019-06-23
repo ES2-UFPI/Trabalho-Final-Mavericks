@@ -20,6 +20,8 @@ public class TesteGeral {
 		testeAlterarConfig.testAlterarConfigDiaTec();
 		testeAlterarConfig.testAlterarConfigMulta();
 		testeCadastroConfig.testaCadastroConfig();
+		testeCalculaMulta.CalculaMultaForaDoPrazo();
+		testeCalculaMulta.CalculaMultaNoPrazo();
 	}
 
 }
