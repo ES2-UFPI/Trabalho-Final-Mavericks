@@ -47,6 +47,11 @@ public class Main {
 		System.out.println("Fim!\n\n");
 	}
 
+	private static void devolucao() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public static void menuCadastro() {
 		int op;
 		do {
@@ -131,8 +136,101 @@ public class Main {
 		return dataDev;
 	}
 
-	public static void devolucao() {
+	
+	public static boolean bissexto(int ano){
+	      if(ano % 400 == 0){
+	            return true;
+	        // se o ano for menor que 400
+	        } else if((ano % 4 == 0) && (ano % 100 != 0)){
+	            return true;
+	        } else{
+	            return false;
+	        }
 	}
+	
+	public static double calculaMulta(int dias, Calendar dataDev, Calendar dataEmp, Calendar dataHj){
+		int diaEmp = dataEmp.get(Calendar.DAY_OF_MONTH);
+		int mesEmp = dataEmp.getMaximum(Calendar.MONTH);
+		int anoEmp = dataEmp.getMaximum(Calendar.YEAR);
+		int diaDev = dataDev.get(Calendar.DAY_OF_MONTH);
+		int mesDev = dataDev.getMaximum(Calendar.MONTH);
+		int anoDev = dataDev.getMaximum(Calendar.YEAR);
+			if((mesEmp == 1) || (mesEmp == 5) || (mesEmp == 7) || (mesEmp == 18) || (mesEmp == 10) || (mesEmp == 12)){
+				if((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)){
+					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+					aux += 31;
+					if((aux - diaEmp) > dias){
+						return (aux - diaEmp) *  configuracao.getMulta();
+					}
+				}else{
+					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+					if((aux - diaEmp) > dias){
+						return (aux - diaDev) * configuracao.getMulta();
+					}
+				}
+				
+			}if(mesEmp == 2){
+				if(bissexto(anoEmp)){
+					if((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)){
+						int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+						aux += 29;
+						if((aux - diaEmp) > dias){
+							return (aux - dias) * configuracao.getMulta();
+						}
+					}else{
+						int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+						if((aux - diaEmp) > dias){
+							return (aux - diaDev) * configuracao.getMulta();
+						}
+					}
+				}else{
+						if((dataHj.get(Calendar.DAY_OF_MONTH) < diaEmp)){
+							int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+							aux += 28;
+							if((aux - diaEmp) > dias){
+								return (aux - diaDev) * configuracao.getMulta();
+							}
+						}else{
+							int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+							if((aux - diaEmp) > dias){
+								return (aux - diaDev) * configuracao.getMulta();
+							}
+						}
+					}
+			}if((mesEmp == 3) || (mesEmp == 4) || (mesEmp == 6) || (mesEmp == 9) || (mesEmp == 11)){
+				if((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)){
+					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+					aux += 30;
+					if((aux - diaEmp) > dias){
+						return (aux - diaDev) * configuracao.getMulta();
+					}
+				}else{
+					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+					if((aux - diaEmp) > dias){
+						return (aux - diaDev) * configuracao.getMulta();
+					}
+				}
+			}
+			return 0;
+	}
+
+	
+	public static double calculaMulta(Calendar dataDev, Calendar dataEmp, String categoria){
+		Calendar hj = Calendar.getInstance();
+		int dia = hj.get(Calendar.DAY_OF_MONTH);
+		int mes = hj.get(Calendar.MONTH);
+		int ano = hj.get(Calendar.YEAR);
+		if(categoria.equals("Aluno")){
+			int dias = configuracao.getDiasAluno();
+			return calculaMulta(dias, dataDev, dataEmp, hj);
+		}if(categoria.equals("Professor")){
+			int dias = configuracao.getDiasProf();
+			return calculaMulta(dias, dataDev, dataEmp, hj);
+		}if(categoria.equals("Tecnico Adm.")){
+			int dias = configuracao.getDiasTec();
+			return calculaMulta(dias, dataDev, dataEmp, hj);
+		}return 0;
+  }
 
 	public static void relatorios() {
 		int op;
