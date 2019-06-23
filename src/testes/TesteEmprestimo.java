@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import main.Configuracao;
 import main.Emprestimo;
+import main.Exemplar;
 import main.Livro;
 import main.Locatario;
 import main.Main;
@@ -52,27 +53,30 @@ public class TesteEmprestimo {
 		assertEquals(locatario,em.getLocatario());
 		assertEquals(atual,em.getData_emp());
 		assertEquals(devolucao,em.getData_dev());
+		Main.emprestimos.remove(em);
+		Main.emprestimos.remove(em2);
 	}
 
 	@Test
 	public void testBuscarLocatario() {
 	    Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
-		
-		
 		Locatario locatario2 = new Locatario("marcos", "Aluno", "123", 2);
-		
 		Main.locatarios.add(locatario);
 		Main.locatarios.add(locatario2);
 		assertEquals(locatario,Main.buscarLocatario(1));
 		assertEquals(locatario2,Main.buscarLocatario(2));
+		Main.locatarios.remove(locatario);
+		Main.locatarios.remove(locatario2);
+		
 	}
 
 	@Test
 	public void testBuscarExemplar() {
-		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Exemplar exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
 		Main.exemplares.add(exemplar);
 		System.out.println(exemplar.getAutor());
-		assertEquals(exemplar,Main.buscarExemplar(1));
+		assertEquals(exemplar.getCodigo(),Main.buscarExemplar(1).getCodigo());
+		Main.exemplares.remove(exemplar);
 	}
 	
 	@Test
@@ -103,6 +107,8 @@ public class TesteEmprestimo {
 		assertEquals(em.getData_emp().get(Calendar.DAY_OF_MONTH), lista.get(0).getData_emp().get(Calendar.DAY_OF_MONTH));
 	
 		assertEquals(em2.getData_emp().get(Calendar.DAY_OF_MONTH), lista.get(1).getData_emp().get(Calendar.DAY_OF_MONTH));
+		Main.emprestimos.remove(em);
+		Main.emprestimos.remove(em2);
 	}
 	
 	

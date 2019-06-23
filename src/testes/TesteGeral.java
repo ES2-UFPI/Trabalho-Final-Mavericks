@@ -12,7 +12,16 @@ public class TesteGeral {
 	TesteConfiguracao testeConfiguracao = new TesteConfiguracao();
 	TesteEmprestimo testeEmprestimo = new TesteEmprestimo();
 
-
+	@Test
+	public void testeEmprestimo(){
+		testeEmprestimo.testBuscarExemplar();
+		testeEmprestimo.testRelatorio();
+		testeEmprestimo.testEmprestimo();
+		testeEmprestimo.testBuscarLocatario();
+		
+		testeEmprestimo.testCalcularData();
+		
+	}
 	@Test
 	public void testLocatario() {
 		testLocatario.pesquisarLocatario();
@@ -55,15 +64,7 @@ public class TesteGeral {
 		testeCalculaMulta.CalculaMultaNoPrazo();
 	}
 	
-	@Test
-	public void testeEmprestimo(){
-		testeEmprestimo.testRelatorio();
-		testeEmprestimo.testEmprestimo();
-		testeEmprestimo.testBuscarLocatario();
-		testeEmprestimo.testBuscarExemplar();
-		testeEmprestimo.testCalcularData();
-		
-	}
+	
 	
 	
 	
