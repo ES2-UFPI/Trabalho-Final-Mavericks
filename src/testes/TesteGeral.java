@@ -35,6 +35,7 @@ public class TesteGeral {
 		testeExemplar.cadastrarExemplar();
 		testeExemplar.relatorioExemplar();
 		testeExemplar.pesquisarExemplar();
+		testeExemplar.devolucaoExemplar();
 	}
 	
 	@Test
