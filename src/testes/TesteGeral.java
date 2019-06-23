@@ -10,6 +10,7 @@ public class TesteGeral {
 	TesteCadastroConfiguracao testeCadastroConfig = new TesteCadastroConfiguracao();
 	TesteCalculaMulta testeCalculaMulta = new TesteCalculaMulta();
 	TesteConfiguracao testeConfiguracao = new TesteConfiguracao();
+	TesteEmprestimo testeEmprestimo = new TesteEmprestimo();
 
 
 	@Test
@@ -53,4 +54,18 @@ public class TesteGeral {
 		testeCalculaMulta.CalculaMultaForaDoPrazo();
 		testeCalculaMulta.CalculaMultaNoPrazo();
 	}
+	
+	@Test
+	public void testeEmprestimo(){
+		testeEmprestimo.testRelatorio();
+		testeEmprestimo.testEmprestimo();
+		testeEmprestimo.testBuscarLocatario();
+		testeEmprestimo.testBuscarExemplar();
+		testeEmprestimo.testCalcularData();
+		
+	}
+	
+	
+	
+	
 }

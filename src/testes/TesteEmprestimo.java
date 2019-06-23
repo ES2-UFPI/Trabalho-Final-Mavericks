@@ -16,34 +16,37 @@ import main.Main;
 public class TesteEmprestimo {
 	
 	
-   Livro exemplar ;
-   Locatario locatario;
-   Locatario locatario2;
-   Emprestimo em;
-   Emprestimo em2; 
-   Calendar atual = Calendar.getInstance();
-   Calendar devolucao = Calendar.getInstance();
-	@Before
-	public void setUp() throws Exception {
-		exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+   //Livro exemplar ;
+   //Locatario locatario;
+   //Locatario locatario2;
+   //Emprestimo em;
+   //Emprestimo em2; 
+   //Calendar atual = Calendar.getInstance();
+   //Calendar devolucao = Calendar.getInstance();
+	//@Before
+	//public void setUp() throws Exception {
+		
+	//}
+
+	@Test
+	public void testEmprestimo() {
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
 		
 		
-		locatario = new Locatario("joao", "Aluno", "123", 1);
-		
-		
-		locatario2 = new Locatario("marcos", "Aluno", "123", 2);
+		Locatario locatario2 = new Locatario("marcos", "Aluno", "123", 2);
 		
 		
 		Main.configuracao = new Configuracao(50,7 ,7,7);
 		
-		em = new Emprestimo(exemplar,locatario,atual,devolucao);
-		em2 = new Emprestimo(exemplar,locatario2,atual,devolucao);
+		Emprestimo em = new Emprestimo(exemplar,locatario,atual,devolucao);
+		Emprestimo em2 = new Emprestimo(exemplar,locatario2,atual,devolucao);
 		Main.emprestimos.add(em);
 		Main.emprestimos.add(em2);
-	}
-
-	@Test
-	public void testEmprestimo() {
+		
 		
 		assertEquals(exemplar,em.getExemplar());
 		assertEquals(locatario,em.getLocatario());
@@ -53,6 +56,11 @@ public class TesteEmprestimo {
 
 	@Test
 	public void testBuscarLocatario() {
+	    Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
+		
+		
+		Locatario locatario2 = new Locatario("marcos", "Aluno", "123", 2);
+		
 		Main.locatarios.add(locatario);
 		Main.locatarios.add(locatario2);
 		assertEquals(locatario,Main.buscarLocatario(1));
@@ -61,23 +69,40 @@ public class TesteEmprestimo {
 
 	@Test
 	public void testBuscarExemplar() {
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
 		Main.exemplares.add(exemplar);
+		System.out.println(exemplar.getAutor());
 		assertEquals(exemplar,Main.buscarExemplar(1));
 	}
 	
 	@Test
 	public void testCalcularData() {
-		devolucao = Main.calcularData(atual, devolucao, locatario);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
+		 devolucao = Main.calcularData(atual, devolucao, locatario);
 		assertEquals(atual.get(Calendar.DAY_OF_MONTH) + Main.configuracao.getDiasAluno()  , devolucao.get(Calendar.DAY_OF_MONTH)  );
 	}
 
 	@Test
 	public void testRelatorio() {
-		@SuppressWarnings("unchecked")
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
+		Locatario locatario2 = new Locatario("marcos", "Aluno", "123", 2);
+		Main.configuracao = new Configuracao(50,7 ,7,7);
+		Emprestimo em = new Emprestimo(exemplar,locatario,atual,devolucao);
+		Emprestimo em2 = new Emprestimo(exemplar,locatario2,atual,devolucao);
+		devolucao = Main.calcularData(atual, devolucao, locatario);
+		Main.emprestimos.add(em);
+		Main.emprestimos.add(em2);
+		
 		ArrayList<Emprestimo> lista = (ArrayList<Emprestimo>) Main.relatorioEmprestimoGeral(0);
-		assertEquals(em.getData_emp(), lista.get(0).getData_emp());
+		assertEquals(em.getData_emp().get(Calendar.DAY_OF_MONTH), lista.get(0).getData_emp().get(Calendar.DAY_OF_MONTH));
 	
-		assertEquals(em2.getData_emp(), lista.get(1).getData_emp());
+		assertEquals(em2.getData_emp().get(Calendar.DAY_OF_MONTH), lista.get(1).getData_emp().get(Calendar.DAY_OF_MONTH));
 	}
 	
 	
