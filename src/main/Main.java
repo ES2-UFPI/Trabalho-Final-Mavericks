@@ -19,9 +19,7 @@ public class Main {
 	public static Configuracao configuracao;
 
 	public static void main(String[] args) {
-	
-		
-		
+
 		int op;
 
 		do {
@@ -49,7 +47,7 @@ public class Main {
 
 	private static void devolucao() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void menuCadastro() {
@@ -95,7 +93,7 @@ public class Main {
 		Calendar dataAtual = Calendar.getInstance();
 		Calendar dataDev = Calendar.getInstance();
 
-		if(configuracao==null) {
+		if (configuracao == null) {
 			System.out.println("Nenhuma configuracao foi cadastrada!\n");
 			return;
 		}
@@ -140,110 +138,113 @@ public class Main {
 		return dataDev;
 	}
 
-	
-	public static boolean bissexto(int ano){
-	      if(ano % 400 == 0){
-	            return true;
-	        // se o ano for menor que 400
-	        } else if((ano % 4 == 0) && (ano % 100 != 0)){
-	            return true;
-	        } else{
-	            return false;
-	        }
+	public static boolean bissexto(int ano) {
+		if (ano % 400 == 0) {
+			return true;
+			// se o ano for menor que 400
+		} else if ((ano % 4 == 0) && (ano % 100 != 0)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	
-	public static double calculaMulta(int dias, Calendar dataDev, Calendar dataEmp, Calendar dataHj){
+
+	public static double calculaMulta(int dias, Calendar dataDev, Calendar dataEmp, Calendar dataHj) {
 		int diaEmp = dataEmp.get(Calendar.DAY_OF_MONTH);
 		int mesEmp = dataEmp.getMaximum(Calendar.MONTH);
 		int anoEmp = dataEmp.getMaximum(Calendar.YEAR);
 		int diaDev = dataDev.get(Calendar.DAY_OF_MONTH);
 		int mesDev = dataDev.getMaximum(Calendar.MONTH);
 		int anoDev = dataDev.getMaximum(Calendar.YEAR);
-			if((mesEmp == 1) || (mesEmp == 5) || (mesEmp == 7) || (mesEmp == 18) || (mesEmp == 10) || (mesEmp == 12)){
-				if((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)){
+		if ((mesEmp == 1) || (mesEmp == 5) || (mesEmp == 7) || (mesEmp == 18) || (mesEmp == 10) || (mesEmp == 12)) {
+			if ((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)) {
+				int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+				aux += 31;
+				if ((aux - diaEmp) > dias) {
+					return (aux - diaEmp) * configuracao.getMulta();
+				}
+			} else {
+				int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+				if ((aux - diaEmp) > dias) {
+					return (aux - diaDev) * configuracao.getMulta();
+				}
+			}
+
+		}
+		if (mesEmp == 2) {
+			if (bissexto(anoEmp)) {
+				if ((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)) {
 					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-					aux += 31;
-					if((aux - diaEmp) > dias){
-						return (aux - diaEmp) *  configuracao.getMulta();
+					aux += 29;
+					if ((aux - diaEmp) > dias) {
+						return (aux - dias) * configuracao.getMulta();
 					}
-				}else{
+				} else {
 					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-					if((aux - diaEmp) > dias){
+					if ((aux - diaEmp) > dias) {
 						return (aux - diaDev) * configuracao.getMulta();
 					}
 				}
-				
-			}if(mesEmp == 2){
-				if(bissexto(anoEmp)){
-					if((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)){
-						int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-						aux += 29;
-						if((aux - diaEmp) > dias){
-							return (aux - dias) * configuracao.getMulta();
-						}
-					}else{
-						int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-						if((aux - diaEmp) > dias){
-							return (aux - diaDev) * configuracao.getMulta();
-						}
-					}
-				}else{
-						if((dataHj.get(Calendar.DAY_OF_MONTH) < diaEmp)){
-							int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-							aux += 28;
-							if((aux - diaEmp) > dias){
-								return (aux - diaDev) * configuracao.getMulta();
-							}
-						}else{
-							int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-							if((aux - diaEmp) > dias){
-								return (aux - diaDev) * configuracao.getMulta();
-							}
-						}
-					}
-			}if((mesEmp == 3) || (mesEmp == 4) || (mesEmp == 6) || (mesEmp == 9) || (mesEmp == 11)){
-				if((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)){
+			} else {
+				if ((dataHj.get(Calendar.DAY_OF_MONTH) < diaEmp)) {
 					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-					aux += 30;
-					if((aux - diaEmp) > dias){
+					aux += 28;
+					if ((aux - diaEmp) > dias) {
 						return (aux - diaDev) * configuracao.getMulta();
 					}
-				}else{
+				} else {
 					int aux = dataHj.get(Calendar.DAY_OF_MONTH);
-					if((aux - diaEmp) > dias){
+					if ((aux - diaEmp) > dias) {
 						return (aux - diaDev) * configuracao.getMulta();
 					}
 				}
 			}
-			return 0;
+		}
+		if ((mesEmp == 3) || (mesEmp == 4) || (mesEmp == 6) || (mesEmp == 9) || (mesEmp == 11)) {
+			if ((dataHj.get(Calendar.DAY_OF_MONTH) < diaDev)) {
+				int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+				aux += 30;
+				if ((aux - diaEmp) > dias) {
+					return (aux - diaDev) * configuracao.getMulta();
+				}
+			} else {
+				int aux = dataHj.get(Calendar.DAY_OF_MONTH);
+				if ((aux - diaEmp) > dias) {
+					return (aux - diaDev) * configuracao.getMulta();
+				}
+			}
+		}
+		return 0;
 	}
 
-	
-	public static double calculaMulta(Calendar dataDev, Calendar dataEmp, String categoria){
+	public static double calculaMulta(Calendar dataDev, Calendar dataEmp, String categoria) {
 		Calendar hj = Calendar.getInstance();
 		int dia = hj.get(Calendar.DAY_OF_MONTH);
 		int mes = hj.get(Calendar.MONTH);
 		int ano = hj.get(Calendar.YEAR);
-		if(categoria.equals("Aluno")){
+		if (categoria.equals("Aluno")) {
 			int dias = configuracao.getDiasAluno();
 			return calculaMulta(dias, dataDev, dataEmp, hj);
-		}if(categoria.equals("Professor")){
+		}
+		if (categoria.equals("Professor")) {
 			int dias = configuracao.getDiasProf();
 			return calculaMulta(dias, dataDev, dataEmp, hj);
-		}if(categoria.equals("Tecnico Adm.")){
+		}
+		if (categoria.equals("Tecnico Adm.")) {
 			int dias = configuracao.getDiasTec();
 			return calculaMulta(dias, dataDev, dataEmp, hj);
-		}return 0;
-  }
+		}
+		return 0;
+	}
 
 	public static void relatorios() {
 		int op;
 
 		do {
 			Menu mainMenu = new Menu("Relatorios", Arrays.asList("Relatorios de locatario", "Relatorios de exemplares",
-				"Relatorios de emprestimo","Relatorios de emprestimos em atraso","Sair"));
+					"Relatorios de emprestimo", "Relatorios de emprestimos em atraso", "Sair"));
 			op = mainMenu.getSelection();
-			
+
 			if (op == 1) {
 				relatorioLocatarios();
 			} else if (op == 2) {
@@ -252,12 +253,12 @@ public class Main {
 				relatorioEmprestimos(0);
 			} else if (op == 4) {
 				relatorioEmprestimos(1);
-			} else if(op==5) {
+			} else if (op == 5) {
 				return;
 			}
-		}while(op!=5);
-		//System.out.println("Aperte qualquer tecla para voltar!\n");
-		//s2.nextLine();
+		} while (op != 5);
+		// System.out.println("Aperte qualquer tecla para voltar!\n");
+		// s2.nextLine();
 	}
 
 	public static List relatorioLocatarios() {
@@ -273,36 +274,30 @@ public class Main {
 		}
 		return lista;
 	}
-	
-	public static List relatorioExemplares ()
-	{	
+
+	public static List relatorioExemplares() {
 		List<Exemplar> lista = exemplares;
 		lista.sort(Comparator.comparing(Exemplar::getTitulo));
-		
-		if (lista.isEmpty())
-		{
+
+		if (lista.isEmpty()) {
 			System.out.println("\nNenhum exemplar cadastrado!\n");
 			return lista;
 		}
-		
+
 		System.out.println("\nRelatorio Exemplares\n");
-		
-		for (Exemplar e : lista) 
-		{
-			if (e instanceof Livro)
-			{
+
+		for (Exemplar e : lista) {
+			if (e instanceof Livro) {
 				System.out.println("Livro");
-				imprimirLivro((Livro)e);
-			}
-			else 
-			{
+				imprimirLivro((Livro) e);
+			} else {
 				System.out.println("Artigo");
-				imprimirArtigo((Artigo)e);
+				imprimirArtigo((Artigo) e);
 			}
-			
+
 			System.out.println("\n");
 		}
-		
+
 		return lista;
 	}
 
@@ -329,45 +324,33 @@ public class Main {
 			System.out.println("Aperte qualquer tecla para voltar!\n");
 			s2.nextLine();
 
-		}
-		else if (op == 2)
-		{
+		} else if (op == 2) {
 			System.out.println("\n1 - Pesquisar por codigo");
 			System.out.println("2 - Pesquisar por detalhes");
 			int op2 = s2.nextInt();
-			
-			if (op2 == 1)
-			{
+
+			if (op2 == 1) {
 				System.out.println("\nDigite o codigo do exemplar: ");
 				int cod = s2.nextInt();
 				Exemplar e = pesquisarExemplar(cod);
-				
-				if (e != null)
-				{
-					if (e instanceof Livro)
-					{
-						imprimirLivro((Livro)e);
+
+				if (e != null) {
+					if (e instanceof Livro) {
+						imprimirLivro((Livro) e);
+					} else {
+						imprimirArtigo((Artigo) e);
 					}
-					else 
-					{
-						imprimirArtigo((Artigo)e);
-					}
-				}
-				else 
-				{
+				} else {
 					System.out.println("\nNao existe exemplares com codigo " + cod + "!\n");
 				}
-			}
-			else if (op2 == 2)
-			{
+			} else if (op2 == 2) {
 				System.out.println("\n1 - Pesquisar livro");
 				System.out.println("2 - Pesquisar artigo");
 				int op3 = s2.nextInt();
-				
+
 				s2 = new Scanner(System.in);
-				
-				if (op3 == 1)
-				{
+
+				if (op3 == 1) {
 					System.out.println("\nTitulo: ");
 					String titulo = s2.nextLine();
 					System.out.println("Autor: ");
@@ -377,19 +360,14 @@ public class Main {
 					System.out.println("Paginas: ");
 					int paginas = s2.nextInt();
 					Livro l = pesquisarExemplar(titulo, autor, volume, paginas);
-					
-					if (l != null)
-					{
+
+					if (l != null) {
 						System.out.println("\nCodigo: " + l.getCodigo());
 						System.out.println("Quantidade: " + l.getQuantidade());
-					}
-					else 
-					{
+					} else {
 						System.out.println("\nLivro nao encontrado!\n");
 					}
-				}
-				else if (op3 == 2)
-				{
+				} else if (op3 == 2) {
 					System.out.println("\nTitulo: ");
 					String titulo = s2.nextLine();
 					System.out.println("Autor: ");
@@ -397,23 +375,19 @@ public class Main {
 					System.out.println("Revista: ");
 					String revista = s2.nextLine();
 					Artigo a = pesquisarExemplar(titulo, autor, revista);
-					
-					if (a != null)
-					{
+
+					if (a != null) {
 						System.out.println("\nCodigo: " + a.getCodigo());
 						System.out.println("Quantidade: " + a.getQuantidade());
-					}
-					else 
-					{
+					} else {
 						System.out.println("\nArtigo nao encontrado!\n");
 					}
 				}
 			}
 		}
 	}
-	
-	public static void imprimirLivro (Livro l)
-	{
+
+	public static void imprimirLivro(Livro l) {
 		System.out.println("Codigo: " + l.getCodigo());
 		System.out.println("Titulo: " + l.getTitulo());
 		System.out.println("Autor: " + l.getAutor());
@@ -421,64 +395,52 @@ public class Main {
 		System.out.println("Paginas: " + l.getPaginas());
 		System.out.println("Quantidade: " + l.getQuantidade());
 	}
-	
-	public static void imprimirArtigo (Artigo a)
-	{
+
+	public static void imprimirArtigo(Artigo a) {
 		System.out.println("Codigo: " + a.getCodigo());
 		System.out.println("Titulo: " + a.getTitulo());
 		System.out.println("Autor: " + a.getAutor());
 		System.out.println("Revista: " + a.getRevista());
 		System.out.println("Quantidade: " + a.getQuantidade());
 	}
-	
-	public static Artigo pesquisarExemplar (String titulo, String autor, String revista)
-	{
-		for (Exemplar e : exemplares) 
-		{
+
+	public static Artigo pesquisarExemplar(String titulo, String autor, String revista) {
+		for (Exemplar e : exemplares) {
 			if (e instanceof Livro)
 				continue;
-			
-			if (((Artigo)e).getTitulo().equals(titulo) && ((Artigo)e).getAutor().equals(autor))
-			{
-				if (((Artigo)e).getRevista().equals(revista))
-				{
+
+			if (((Artigo) e).getTitulo().equals(titulo) && ((Artigo) e).getAutor().equals(autor)) {
+				if (((Artigo) e).getRevista().equals(revista)) {
 					return (Artigo) e;
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
-	public static Livro pesquisarExemplar (String titulo, String autor, int volume, int paginas)
-	{
-		for (Exemplar e : exemplares) 
-		{
+
+	public static Livro pesquisarExemplar(String titulo, String autor, int volume, int paginas) {
+		for (Exemplar e : exemplares) {
 			if (e instanceof Artigo)
 				continue;
-			
-			if (((Livro)e).getAutor().equals(autor) && ((Livro)e).getTitulo().equals(titulo))
-			{
-				if (((Livro)e).getVolume() == volume && ((Livro)e).getPaginas() == paginas)
-				{
+
+			if (((Livro) e).getAutor().equals(autor) && ((Livro) e).getTitulo().equals(titulo)) {
+				if (((Livro) e).getVolume() == volume && ((Livro) e).getPaginas() == paginas) {
 					return (Livro) e;
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
-	public static Exemplar pesquisarExemplar (int codigo)
-	{
-		for (Exemplar e : exemplares) 
-		{
-			if (e.getCodigo() == codigo)
-			{
+
+	public static Exemplar pesquisarExemplar(int codigo) {
+		for (Exemplar e : exemplares) {
+			if (e.getCodigo() == codigo) {
 				return e;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -494,111 +456,107 @@ public class Main {
 	}
 
 	public static void relatorioEmprestimos(int e) {
-		int op ;
+		int op;
 
 		do {
 			String m = "";
-			if(e==1) {
+			if (e == 1) {
 				m = "\nRelatorio Emprestimos com Atraso:";
-			}else {
+			} else {
 				m = "\nRelatorio Emprestimos:";
 			}
-			Menu mainMenu = new Menu(m, Arrays.asList("Geral", "Por Locatario",
-					 "Sair"));
+			Menu mainMenu = new Menu(m, Arrays.asList("Geral", "Por Locatario", "Sair"));
 			op = mainMenu.getSelection();
-			
+
 			if (op == 1) {
 				relatorioEmprestimoGeral(e);
 			} else if (op == 2) {
 				relatorioEmprestimoLocatario(e);
-			}else if(op==3) {
+			} else if (op == 3) {
 				return;
 			}
-		}while(op!=3);
-		
+		} while (op != 3);
+
 	}
-	
-	
+
 	public static boolean atrasado(Emprestimo x) {
 		Calendar hj = Calendar.getInstance();
-		if(hj.compareTo(x.getData_dev())==1) {
+		if (hj.compareTo(x.getData_dev()) == 1) {
 			return true;
 		}
 		return false;
 	}
-	
-    public static List	relatorioEmprestimoGeral(int e) {
-    	System.out.println("Relatorio Geral De Emprestimos:");
-    	int temp,atrasado=0,emdia=0;
-    	ArrayList<Emprestimo> lista = new ArrayList<Emprestimo>(emprestimos);
-    	lista.sort(Comparator.comparing(Emprestimo::getData_emp));
-    	for(Emprestimo x : lista) {
-    		temp = x.getData_emp().get(Calendar.MONTH)+1;
-    		if(e==1 && atrasado(x)) {
-    			System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
-    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
-    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
-    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
-    			"\nData de Devolucao: "+
-    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
-    			+x.getData_emp().get(Calendar.YEAR)+"\nMulta R$ "+
-    			calculaMulta(x.getData_dev(),x.getData_emp(),x.getLocatario().getCategoria())+"\n---------------------------");
-    	}else if(e==0) {
-    		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
-    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
-    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
-    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
-    			"\nData de Devolucao: "+
-    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
-    			+x.getData_emp().get(Calendar.YEAR)+"\n------------------");
-    	}
-    	}
-    	if (emprestimos.size()==0) {
-    		System.out.println("\nNao ha emprestimos!\n");
-    	}
+
+	public static List relatorioEmprestimoGeral(int e) {
+		System.out.println("Relatorio Geral De Emprestimos:");
+		int temp, atrasado = 0, emdia = 0;
+		ArrayList<Emprestimo> lista = new ArrayList<Emprestimo>(emprestimos);
+		lista.sort(Comparator.comparing(Emprestimo::getData_emp));
+		for (Emprestimo x : lista) {
+			temp = x.getData_emp().get(Calendar.MONTH) + 1;
+			if (e == 1 && atrasado(x)) {
+				System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
+						+ x.getLocatario().getMatricula() + "\nLivro: " + x.getExemplar().getTitulo()
+						+ "\nData de Emprestimo: " + x.getData_emp().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
+						+ x.getData_emp().get(Calendar.YEAR) + "\nData de Devolucao: "
+						+ x.getData_dev().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
+						+ x.getData_emp().get(Calendar.YEAR) + "\nMulta R$ "
+						+ calculaMulta(x.getData_dev(), x.getData_emp(), x.getLocatario().getCategoria())
+						+ "\n---------------------------");
+			} else if (e == 0) {
+				System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
+						+ x.getLocatario().getMatricula() + "\nLivro: " + x.getExemplar().getTitulo()
+						+ "\nData de Emprestimo: " + x.getData_emp().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
+						+ x.getData_emp().get(Calendar.YEAR) + "\nData de Devolucao: "
+						+ x.getData_dev().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
+						+ x.getData_emp().get(Calendar.YEAR) + "\n------------------");
+			}
+		}
+		if (emprestimos.size() == 0) {
+			System.out.println("\nNao ha emprestimos!\n");
+		}
 		return lista;
-    	
-    }
-    public static void	relatorioEmprestimoLocatario(int e) {
-    	int op,temp;
-    	Locatario loc;
-    	s2 = new Scanner(System.in);
-    	System.out.println("Digite a matricula do Locatario: ");
-    	op = s2.nextInt();
-    	loc = buscarLocatario(op);
-    	if(loc==null) {
-    		System.out.println("Locatario nao encontrado!\n");
-    		return;
-    	}else {
-    		System.out.println("\nRelatorio de emprestimos de "+loc.getNome()+":");
-    		for(Emprestimo x:emprestimos) {
-    			if(x.getLocatario().getMatricula()==loc.getMatricula()) {
-    				temp = x.getData_emp().get(Calendar.MONTH)+1;
-    				if(e==1 && atrasado(x)) {
-    	    		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
-    	    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
-    	    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
-    	    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
-    	    			"\nData de Devolucao: "+
-    	    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
-    	    			+x.getData_emp().get(Calendar.YEAR)+"\nMulta R$ "+
-    	    			calculaMulta(x.getData_dev(),x.getData_emp(),x.getLocatario().getCategoria())+"\n---------------------------");
-    			}else if(e==0) {
-    				System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
-        	    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
-        	    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
-        	    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
-        	    			"\nData de Devolucao: "+
-        	    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
-        	    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
-    			}
-    		}
-    	}
-    }
-    	
-    	
-    	
-    }
+
+	}
+
+	public static void relatorioEmprestimoLocatario(int e) {
+		int op, temp;
+		Locatario loc;
+		s2 = new Scanner(System.in);
+		System.out.println("Digite a matricula do Locatario: ");
+		op = s2.nextInt();
+		loc = buscarLocatario(op);
+		if (loc == null) {
+			System.out.println("Locatario nao encontrado!\n");
+			return;
+		} else {
+			System.out.println("\nRelatorio de emprestimos de " + loc.getNome() + ":");
+			for (Emprestimo x : emprestimos) {
+				if (x.getLocatario().getMatricula() == loc.getMatricula()) {
+					temp = x.getData_emp().get(Calendar.MONTH) + 1;
+					if (e == 1 && atrasado(x)) {
+						System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
+								+ x.getLocatario().getMatricula() + "\nLivro: " + x.getExemplar().getTitulo()
+								+ "\nData de Emprestimo: " + x.getData_emp().get(Calendar.DAY_OF_MONTH) + "/" + temp
+								+ "/" + x.getData_emp().get(Calendar.YEAR) + "\nData de Devolucao: "
+								+ x.getData_dev().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
+								+ x.getData_emp().get(Calendar.YEAR) + "\nMulta R$ "
+								+ calculaMulta(x.getData_dev(), x.getData_emp(), x.getLocatario().getCategoria())
+								+ "\n---------------------------");
+					} else if (e == 0) {
+						System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
+								+ x.getLocatario().getMatricula() + "\nLivro: " + x.getExemplar().getTitulo()
+								+ "\nData de Emprestimo: " + x.getData_emp().get(Calendar.DAY_OF_MONTH) + "/" + temp
+								+ "/" + x.getData_emp().get(Calendar.YEAR) + "\nData de Devolucao: "
+								+ x.getData_dev().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
+								+ x.getData_emp().get(Calendar.YEAR) + "\n---------------------------");
+					}
+				}
+			}
+		}
+
+	}
+
 	public static void alterarConfiguracao() {
 		s2 = new Scanner(System.in);
 		if (configuracao == null) {
@@ -678,36 +636,32 @@ public class Main {
 		String nome = s2.nextLine();
 		String categoria = "";
 
-		try {
-			while (op == 0) {
+		while (op == 0) {
 
-				System.out.println("Selecione sua categoria: \n1 - Aluno \n2 - Professor \n3 - Técnico Adm.\n ");
+			System.out.println("Selecione sua categoria: \n1 - Aluno \n2 - Professor \n3 - Técnico Adm.\n ");
 
-				op = s2.nextInt();
+			op = s2.nextInt();
 
-				if (op == 1) {
-					categoria = "Aluno";
-				} else if (op == 2) {
-					categoria = "Professor";
-				} else if (op == 3) {
-					categoria = "Tecnico Adm.";
-				}
-				if (op >= 4) {
-					System.out.println("Opcao errada!");
-					op = 0;
-				}
+			if (op == 1) {
+				categoria = "Aluno";
+			} else if (op == 2) {
+				categoria = "Professor";
+			} else if (op == 3) {
+				categoria = "Tecnico Adm.";
 			}
-
-			System.out.println("Crie uma senha: ");
-			String senha = s2.nextLine();
-
-			cadastrarLocatario(nome, categoria, senha);
-
-			System.out.println("Aperte qualquer tecla para voltar!\n");
-			s2.nextLine();
-		} catch (NumberFormatException e) {
-			op = 0;
+			if (op >= 4) {
+				System.out.println("Opcao errada!");
+				op = 0;
+			}
 		}
+
+		System.out.println("Crie uma senha: ");
+		String senha = s2.next();
+
+		cadastrarLocatario(nome, categoria, senha);
+
+		System.out.println("Aperte qualquer tecla para voltar!\n");
+		s2.nextLine();
 
 	}
 
@@ -731,7 +685,7 @@ public class Main {
 
 		if (op != 1 && op != 2)
 			return;
-		
+
 		s2 = new Scanner(System.in);
 
 		System.out.println("Titulo: ");
