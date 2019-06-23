@@ -75,7 +75,7 @@ public class Main {
 			}
 		}
 		
-		System.out.println("\nExemplar não esta na lista de emprestimo!\n");
+		System.out.println("\nExemplar nao esta na lista de emprestimo!\n");
 	}
 
 	public static void menuCadastro() {
