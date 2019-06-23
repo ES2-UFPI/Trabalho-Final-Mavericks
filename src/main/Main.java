@@ -64,11 +64,29 @@ public class Main {
 				cadastrarExemplar();
 			} else if (op == 3) {
 				configuracao();
-			}
+			} 
 
 		} while (op != 4);
 	}
 
+	public static Emprestimo emprestimo(Locatario loc,Exemplar ex,Calendar dataAtual,Calendar dataDev ) {
+		Emprestimo emp = null;
+		if (ex.disponivel()) {
+			ex.setQuantidade(ex.getQuantidade() - 1);
+			dataDev = calcularData(dataAtual, dataDev, loc);
+			dataDev.set(Calendar.MONTH, dataDev.get(Calendar.MONTH) + 1);
+			emp = new Emprestimo(ex, loc, dataAtual, dataDev);
+			emprestimos.add(emp);
+			System.out.println("\nEmprestimo realizado com sucesso!\nTitulo: " + ex.getTitulo() + "; " + ex.getAutor()
+					+ "\nDevolver em: " + dataDev.get(Calendar.DAY_OF_MONTH) + "/" + dataDev.get(Calendar.MONTH) + "/"
+					+ dataDev.get(Calendar.YEAR) + "\n");
+
+		} else {
+			System.out.println("Nao ha exemplares disponiveis!\n");
+
+		}
+		return emp;
+	} 
 	public static void emprestimo() {
 		Scanner s2 = new Scanner(System.in);
 		Locatario loc = null;
@@ -101,21 +119,7 @@ public class Main {
 		}
 		// }while(ex == null);
 
-		if (ex.disponivel()) {
-			ex.setQuantidade(ex.getQuantidade() - 1);
-			emprestimos.add(new Emprestimo(ex, loc, dataAtual, dataDev));
-
-			dataDev = calcularData(dataAtual, dataDev, loc);
-			dataDev.set(Calendar.MONTH, dataDev.get(Calendar.MONTH) + 1);
-
-			System.out.println("\nEmprestimo realizado com sucesso!\nTitulo: " + ex.getTitulo() + "; " + ex.getAutor()
-					+ "\nDevolver em: " + dataDev.get(Calendar.DAY_OF_MONTH) + "/" + dataDev.get(Calendar.MONTH) + "/"
-					+ dataDev.get(Calendar.YEAR) + "\n");
-
-		} else {
-			System.out.println("Nao ha exemplares disponiveis!\n");
-
-		}
+		emprestimo(loc,ex,dataAtual,dataDev);
 
 	}
 
