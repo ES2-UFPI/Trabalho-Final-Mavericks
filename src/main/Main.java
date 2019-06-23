@@ -19,6 +19,7 @@ public class Main {
 	public static Configuracao configuracao;
 
 	public static void main(String[] args) {
+	
 		
 		int op;
 
@@ -136,8 +137,8 @@ public class Main {
 		int op;
 
 		do {
-			Menu mainMenu = new Menu("Relatorios", Arrays.asList("Relatorios de locatario", "Relatorios de exemplares", "Relatorios de emprestimo",
-					 "Sair"));
+			Menu mainMenu = new Menu("Relatorios", Arrays.asList("Relatorios de locatario", "Relatorios de exemplares",
+				"Relatorios de emprestimo","Relatorios de emprestimos em atraso","Sair"));
 			op = mainMenu.getSelection();
 			
 			if (op == 1) {
@@ -145,11 +146,13 @@ public class Main {
 			} else if (op == 2) {
 				relatorioExemplares();
 			} else if (op == 3) {
-				relatorioEmprestimos();
+				relatorioEmprestimos(0);
 			} else if (op == 4) {
+				relatorioEmprestimos(1);
+			} else if(op==5) {
 				return;
 			}
-		}while(op!=4);
+		}while(op!=5);
 		//System.out.println("Aperte qualquer tecla para voltar!\n");
 		//s2.nextLine();
 	}
@@ -387,20 +390,24 @@ public class Main {
 
 	}
 
-	public static void relatorioEmprestimos() {
+	public static void relatorioEmprestimos(int e) {
 		int op ;
 
 		do {
-			
-			Menu mainMenu = new Menu("\nRelatorio Emprestimos:", Arrays.asList("Geral", "Por Locatario",
+			String m = "";
+			if(e==1) {
+				m = "\nRelatorio Emprestimos com Atraso:";
+			}else {
+				m = "\nRelatorio Emprestimos:";
+			}
+			Menu mainMenu = new Menu(m, Arrays.asList("Geral", "Por Locatario",
 					 "Sair"));
 			op = mainMenu.getSelection();
 			
-		
 			if (op == 1) {
-				relatorioEmprestimoGeral();
+				relatorioEmprestimoGeral(e);
 			} else if (op == 2) {
-				relatorioEmprestimoLocatario();
+				relatorioEmprestimoLocatario(e);
 			}else if(op==3) {
 				return;
 			}
@@ -408,26 +415,50 @@ public class Main {
 		
 	}
 	
-    public static List	relatorioEmprestimoGeral() {
+	public static double calculaMulta(Calendar dataDev, Calendar dataEmp, String categoria){
+		return 50;
+	}
+	
+	public static boolean atrasado(Emprestimo x) {
+		Calendar hj = Calendar.getInstance();
+		if(hj.compareTo(x.getData_dev())==1) {
+			return true;
+		}
+		return false;
+	}
+    public static List	relatorioEmprestimoGeral(int e) {
     	System.out.println("Relatorio Geral De Emprestimos:");
-    	int temp;
+    	int temp,atrasado=0,emdia=0;
     	ArrayList<Emprestimo> lista = new ArrayList<Emprestimo>(emprestimos);
     	lista.sort(Comparator.comparing(Emprestimo::getData_emp));
     	for(Emprestimo x : lista) {
     		temp = x.getData_emp().get(Calendar.MONTH)+1;
+    		if(e==1 && atrasado(x)) {
+    			System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
+    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
+    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
+    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
+    			"\nData de Devolucao: "+
+    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
+    			+x.getData_emp().get(Calendar.YEAR)+"\nMulta R$ "+
+    			calculaMulta(x.getData_dev(),x.getData_emp(),x.getLocatario().getCategoria())+"\n---------------------------");
+    	}else if(e==0) {
     		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
     			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
     			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
     			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
     			"\nData de Devolucao: "+
     			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
-    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
+    			+x.getData_emp().get(Calendar.YEAR)+"\n------------------");
     	}
-    	
+    	}
+    	if (emprestimos.size()==0) {
+    		System.out.println("\nNao ha emprestimos!\n");
+    	}
 		return lista;
     	
     }
-    public static void	relatorioEmprestimoLocatario() {
+    public static void	relatorioEmprestimoLocatario(int e) {
     	int op,temp;
     	Locatario loc;
     	s2 = new Scanner(System.in);
@@ -442,16 +473,27 @@ public class Main {
     		for(Emprestimo x:emprestimos) {
     			if(x.getLocatario().getMatricula()==loc.getMatricula()) {
     				temp = x.getData_emp().get(Calendar.MONTH)+1;
+    				if(e==1 && atrasado(x)) {
     	    		System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
     	    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
     	    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
     	    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
     	    			"\nData de Devolucao: "+
     	    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
-    	    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
+    	    			+x.getData_emp().get(Calendar.YEAR)+"\nMulta R$ "+
+    	    			calculaMulta(x.getData_dev(),x.getData_emp(),x.getLocatario().getCategoria())+"\n---------------------------");
+    			}else if(e==0) {
+    				System.out.println("\nNome: "+x.getLocatario().getNome()+"\nMAtricula: "
+        	    			+x.getLocatario().getMatricula()+"\nLivro: "+x.getExemplar().getTitulo()
+        	    			+"\nData de Emprestimo: "+x.getData_emp().get(Calendar.DAY_OF_MONTH)+"/"
+        	    			+temp+"/"+x.getData_emp().get(Calendar.YEAR)+
+        	    			"\nData de Devolucao: "+
+        	    			x.getData_dev().get(Calendar.DAY_OF_MONTH)+"/"+temp+"/"
+        	    			+x.getData_emp().get(Calendar.YEAR)+"\n---------------------------");
     			}
     		}
     	}
+    }
     	
     	
     	
