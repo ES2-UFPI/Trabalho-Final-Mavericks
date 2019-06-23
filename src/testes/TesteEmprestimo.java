@@ -72,7 +72,7 @@ public class TesteEmprestimo {
 	}
 
 	@Test
-	public void testRelatorioGeral() {
+	public void testRelatorio() {
 		@SuppressWarnings("unchecked")
 		ArrayList<Emprestimo> lista = (ArrayList<Emprestimo>) Main.relatorioEmprestimoGeral(0);
 		assertEquals(em.getData_emp(), lista.get(0).getData_emp());
