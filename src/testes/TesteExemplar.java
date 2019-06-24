@@ -2,6 +2,7 @@ package testes;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import main.Artigo;
 import main.Exemplar;
 import main.Livro;
+import main.Locatario;
 import main.Main;
 
 public class TesteExemplar 
@@ -95,5 +97,22 @@ public class TesteExemplar
 		assertEquals("Joao", list.get(1).getAutor());
 		assertEquals("Cultura", ((Artigo)list.get(1)).getRevista());
 		assertEquals(2, list.get(1).getQuantidade());
+	}
+	
+	@Test
+	public void devolucaoExemplar ()
+	{
+		Locatario l = new Locatario("Heitor", "aluno", "123", 5);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Main.exemplares.get(0);
+		assertEquals(4, Main.exemplares.get(0).getQuantidade());
+		Main.emprestimo(l, Main.exemplares.get(0), atual, devolucao);
+		assertEquals(1, Main.emprestimos.size());
+		assertEquals(3, Main.exemplares.get(0).getQuantidade());
+		Main.devolverExemplar(1, 24, 6);
+		assertEquals(4, Main.exemplares.get(0).getQuantidade());
+		assertEquals(0, Main.emprestimos.size());
 	}
 }

@@ -45,9 +45,54 @@ public class Main {
 		System.out.println("Fim!\n\n");
 	}
 
-	private static void devolucao() {
-		// TODO Auto-generated method stub
-
+	private static void devolucao () 
+	{
+		Scanner s2 = new Scanner(System.in);
+		System.out.println("\nCodigo do exemplar devolvido: ");
+		int cod = s2.nextInt();
+		System.out.println("\nDia da devolucao: ");
+		int dia = s2.nextInt();
+		System.out.println("\nMes da devolucao: ");
+		int mes = s2.nextInt();
+		
+		devolverExemplar(cod, dia, mes);
+	}
+	
+	public static void devolverExemplar (int codigo, int dia, int mes)
+	{
+		for (int i = 0; i < emprestimos.size(); i++)
+		{
+			if (emprestimos.get(i).getExemplar().getCodigo() == codigo)
+			{	
+				for (Exemplar e : exemplares) 
+				{
+					if (e.getCodigo() == codigo)
+					{
+						e.setQuantidade(e.getQuantidade() + 1);
+						System.out.println("\nExemplar " + e.getTitulo() + " codigo " + e.getCodigo() + " devolvido!\n");
+						
+						Calendar data = Calendar.getInstance();
+						data.set(Calendar.DAY_OF_MONTH, dia);
+						data.set(Calendar.MONTH, mes);
+						Calendar dataEmp = emprestimos.get(i).getData_emp();
+						String categoria = emprestimos.get(i).getLocatario().getCategoria();
+						
+						double multa = calculaMulta(data, dataEmp, categoria);
+						
+						if (multa > 0)
+						{
+							System.out.println("\nDevolvido com atraso, multa de: " + multa + " reais!\n");
+						}
+						
+						emprestimos.remove(i);
+						
+						return;
+					}
+				}
+			}
+		}
+		
+		System.out.println("\nExemplar nao esta na lista de emprestimo!\n");
 	}
 
 	public static void menuCadastro() {
