@@ -7,17 +7,31 @@ import java.util.Calendar;
 import org.junit.Assert;
 import org.junit.Test;
 
+import main.Configuracao;
+import main.Emprestimo;
+import main.Livro;
+import main.Locatario;
 import main.Main;
 
 public class TesteCalculaMulta {
 
 	@Test
 	public void CalculaMultaNoPrazo() {
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
+	
+		Main.configuracao = new Configuracao(50,7 ,7,7);
+		
+	
+		
 		Calendar dataDev = Calendar.getInstance();
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
 		hj.set(Calendar.DAY_OF_MONTH, 4);
-		hj.set(Calendar.MONTH, 3);
+		hj.set(Calendar.MONTH, 1);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
 		dataEmp.set(Calendar.MONTH, 1);
@@ -25,31 +39,90 @@ public class TesteCalculaMulta {
 		dataDev.set(Calendar.DAY_OF_MONTH, 4);
 		dataDev.set(Calendar.MONTH, 1);
 		dataDev.set(Calendar.YEAR, 2019);
-		Main.cadastrarConfiguracao(2.80, 2, 3, 4);
-		Assert.assertEquals((0), Main.calculaMulta(3, dataDev, dataEmp, hj), 0.0);
+		Emprestimo em = new Emprestimo(exemplar, locatario, dataEmp, dataDev);
+		Assert.assertEquals((0), Main.calculaMulta(em, hj), 0.0);
 		
 	}
 	
 	@Test
 	public void CalculaMultaForaDoPrazo() {
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
+	
+		Main.configuracao = new Configuracao(50,7 ,7,7);
 		Calendar dataDev = Calendar.getInstance();
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
 		int dias = 4;
-		hj.set(Calendar.DAY_OF_MONTH, 6);
-		hj.set(Calendar.MONTH, 3);
+		hj.set(Calendar.DAY_OF_MONTH, 11);
+		hj.set(Calendar.MONTH, 1);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
 		dataEmp.set(Calendar.MONTH, 1);
 		dataEmp.set(Calendar.YEAR, 2019);
-		dataDev.set(Calendar.DAY_OF_MONTH, 5);
+		dataDev.set(Calendar.DAY_OF_MONTH, 10);
 		dataDev.set(Calendar.MONTH, 1);
 		dataDev.set(Calendar.YEAR, 2019);
-		Main.cadastrarConfiguracao(2.80, 2, 3, 4);
-		Assert.assertEquals((2.80 ), Main.calculaMulta(Main.configuracao.getDiasAluno(), dataDev, dataEmp, hj), 0.0);
+		Emprestimo em = new Emprestimo(exemplar, locatario, dataEmp, dataDev);
+		Assert.assertEquals((50 ), Main.calculaMulta(em, hj), 0.0);
 		
 	}
 	
+	@Test
+	public void CalculaMultaNoDoPrazoOutroMes() {
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
 	
+		Main.configuracao = new Configuracao(50,7 ,7,7);
+		Calendar dataDev = Calendar.getInstance();
+		Calendar dataEmp = Calendar.getInstance();
+		Calendar hj = Calendar.getInstance();
+		int dias = 4;
+		hj.set(Calendar.DAY_OF_MONTH, 1);
+		hj.set(Calendar.MONTH, 2);
+		hj.set(Calendar.YEAR, 2019);
+		dataEmp.set(Calendar.DAY_OF_MONTH, 30);
+		dataEmp.set(Calendar.MONTH, 1);
+		dataEmp.set(Calendar.YEAR, 2019);
+		dataDev.set(Calendar.DAY_OF_MONTH, 6);
+		dataDev.set(Calendar.MONTH, 2);
+		dataDev.set(Calendar.YEAR, 2019);
+		Emprestimo em = new Emprestimo(exemplar, locatario, dataEmp, dataDev);
+		Assert.assertEquals((0 ), Main.calculaMulta(em, hj), 0.0);
+		
+	}
+	
+	@Test
+	public void CalculaMultaForaD0PrazoOutroMes() {
+		Livro exemplar = new Livro(1, 3, "titulo", "autor", 3, 123);
+		Calendar atual = Calendar.getInstance();
+		Calendar devolucao = Calendar.getInstance();
+		
+		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
+	
+		Main.configuracao = new Configuracao(50,7 ,7,7);
+		Calendar dataDev = Calendar.getInstance();
+		Calendar dataEmp = Calendar.getInstance();
+		Calendar hj = Calendar.getInstance();
+		int dias = 4;
+		hj.set(Calendar.DAY_OF_MONTH, 7);
+		hj.set(Calendar.MONTH, 2);
+		hj.set(Calendar.YEAR, 2019);
+		dataEmp.set(Calendar.DAY_OF_MONTH, 30);
+		dataEmp.set(Calendar.MONTH, 1);
+		dataEmp.set(Calendar.YEAR, 2019);
+		dataDev.set(Calendar.DAY_OF_MONTH, 6);
+		dataDev.set(Calendar.MONTH, 2);
+		dataDev.set(Calendar.YEAR, 2019);
+		Emprestimo em = new Emprestimo(exemplar, locatario, dataEmp, dataDev);
+		Assert.assertEquals((50 ), Main.calculaMulta(em, hj), 0.0);
+		
+	}
 
 }
