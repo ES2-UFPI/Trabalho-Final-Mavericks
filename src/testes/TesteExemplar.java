@@ -111,7 +111,7 @@ public class TesteExemplar
 		Main.emprestimo(l, Main.exemplares.get(0), atual, devolucao);
 		assertEquals(1, Main.emprestimos.size());
 		assertEquals(3, Main.exemplares.get(0).getQuantidade());
-		Main.devolverExemplar(1);
+		Main.devolverExemplar(1, 24, 6);
 		assertEquals(4, Main.exemplares.get(0).getQuantidade());
 		assertEquals(0, Main.emprestimos.size());
 	}

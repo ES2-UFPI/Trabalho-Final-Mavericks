@@ -50,11 +50,15 @@ public class Main {
 		Scanner s2 = new Scanner(System.in);
 		System.out.println("\nCodigo do exemplar devolvido: ");
 		int cod = s2.nextInt();
+		System.out.println("\nDia: ");
+		int dia = s2.nextInt();
+		System.out.println("\nMes: ");
+		int mes = s2.nextInt();
 		
-		devolverExemplar(cod);
+		devolverExemplar(cod, dia, mes);
 	}
 	
-	public static void devolverExemplar (int codigo)
+	public static void devolverExemplar (int codigo, int dia, int mes)
 	{
 		for (int i = 0; i < emprestimos.size(); i++)
 		{
@@ -68,6 +72,8 @@ public class Main {
 						System.out.println("\nExemplar " + e.getTitulo() + " codigo " + e.getCodigo() + " devolvido!\n");
 						
 						Calendar data = Calendar.getInstance();
+						data.set(Calendar.DAY_OF_MONTH, dia);
+						data.set(Calendar.MONTH, mes);
 						Calendar dataEmp = emprestimos.get(i).getData_emp();
 						String categoria = emprestimos.get(i).getLocatario().getCategoria();
 						
