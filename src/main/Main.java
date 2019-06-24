@@ -50,9 +50,9 @@ public class Main {
 		Scanner s2 = new Scanner(System.in);
 		System.out.println("\nCodigo do exemplar devolvido: ");
 		int cod = s2.nextInt();
-		System.out.println("\nDia: ");
+		System.out.println("\nDia da devolucao: ");
 		int dia = s2.nextInt();
-		System.out.println("\nMes: ");
+		System.out.println("\nMes da devolucao: ");
 		int mes = s2.nextInt();
 		
 		devolverExemplar(cod, dia, mes);
