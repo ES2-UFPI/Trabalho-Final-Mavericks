@@ -59,15 +59,26 @@ public class Main {
 		for (int i = 0; i < emprestimos.size(); i++)
 		{
 			if (emprestimos.get(i).getExemplar().getCodigo() == codigo)
-			{
-				emprestimos.remove(i);
-				
+			{	
 				for (Exemplar e : exemplares) 
 				{
 					if (e.getCodigo() == codigo)
 					{
 						e.setQuantidade(e.getQuantidade() + 1);
 						System.out.println("\nExemplar " + e.getTitulo() + " codigo " + e.getCodigo() + " devolvido!\n");
+						
+						Calendar data = Calendar.getInstance();
+						Calendar dataEmp = emprestimos.get(i).getData_emp();
+						String categoria = emprestimos.get(i).getLocatario().getCategoria();
+						
+						double multa = calculaMulta(data, dataEmp, categoria);
+						
+						if (multa > 0)
+						{
+							System.out.println("\nDevolvido com atraso, multa de: " + multa + " reais!\n");
+						}
+						
+						emprestimos.remove(i);
 						
 						return;
 					}
