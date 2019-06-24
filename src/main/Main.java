@@ -128,16 +128,7 @@ public class Main {
 		return dataDev;
 	}
 	
-	public static boolean bissexto(int ano){
-	      if(ano % 400 == 0){
-	            return true;
-	        // se o ano for menor que 400
-	        } else if((ano % 4 == 0) && (ano % 100 != 0)){
-	            return true;
-	        } else{
-	            return false;
-	        }
-	}
+	
 	
 	public static double calculaMulta(int dias, Calendar dataDev, Calendar dataEmp, Calendar dataHj){
 		int diaDev = dataDev.get(Calendar.DAY_OF_MONTH);
