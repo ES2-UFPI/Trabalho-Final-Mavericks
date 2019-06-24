@@ -17,7 +17,7 @@ public class TesteCalculaMulta {
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
 		hj.set(Calendar.DAY_OF_MONTH, 4);
-		hj.set(Calendar.MONTH, 3);
+		hj.set(Calendar.MONTH, 1);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
 		dataEmp.set(Calendar.MONTH, 1);
@@ -30,13 +30,34 @@ public class TesteCalculaMulta {
 		
 	}
 	
+	
+	
 	@Test
 	public void CalculaMultaForaDoPrazo() {
 		Calendar dataDev = Calendar.getInstance();
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
-		int dias = 4;
-		hj.set(Calendar.DAY_OF_MONTH, 6);
+		int dias = 2;
+		hj.set(Calendar.DAY_OF_MONTH, 7);
+		hj.set(Calendar.MONTH, 1);
+		hj.set(Calendar.YEAR, 2019);
+		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
+		dataEmp.set(Calendar.MONTH, 1);
+		dataEmp.set(Calendar.YEAR, 2019);
+		dataDev.set(Calendar.DAY_OF_MONTH, 5);
+		dataDev.set(Calendar.MONTH, 1);
+		dataDev.set(Calendar.YEAR, 2019);
+		Main.cadastrarConfiguracao(1, 2, 3, 4);
+		Assert.assertEquals((2), Main.calculaMulta(Main.configuracao.getDiasAluno(), dataDev, dataEmp, hj), 0.0);
+		
+	}
+	
+	public void CalculaMultaMesDiferente() {
+		Calendar dataDev = Calendar.getInstance();
+		Calendar dataEmp = Calendar.getInstance();
+		Calendar hj = Calendar.getInstance();
+		int dias = 2;
+		hj.set(Calendar.DAY_OF_MONTH, 7);
 		hj.set(Calendar.MONTH, 3);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
@@ -45,10 +66,15 @@ public class TesteCalculaMulta {
 		dataDev.set(Calendar.DAY_OF_MONTH, 5);
 		dataDev.set(Calendar.MONTH, 1);
 		dataDev.set(Calendar.YEAR, 2019);
-		Main.cadastrarConfiguracao(2.80, 2, 3, 4);
-		Assert.assertEquals((2.80 ), Main.calculaMulta(Main.configuracao.getDiasAluno(), dataDev, dataEmp, hj), 0.0);
+		Main.cadastrarConfiguracao(1, 2, 3, 4);
+		Assert.assertEquals((60), Main.calculaMulta(Main.configuracao.getDiasAluno(), dataDev, dataEmp, hj), 0.0);
 		
 	}
+	
+	
+	
+	
+	
 	
 	
 
