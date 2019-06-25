@@ -48,6 +48,8 @@ public class Main {
 	private static void devolucao () 
 	{
 		Scanner s2 = new Scanner(System.in);
+		System.out.println("\nMatricula do Locatario: ");
+		int mat = s2.nextInt();
 		System.out.println("\nCodigo do exemplar devolvido: ");
 		int cod = s2.nextInt();
 		System.out.println("\nDia da devolucao: ");
@@ -55,20 +57,21 @@ public class Main {
 		System.out.println("\nMes da devolucao: ");
 		int mes = s2.nextInt();
 		
-		devolverExemplar(cod, dia, mes);
+		devolverExemplar(mat, cod, dia, mes);
 	}
 	
-	public static void devolverExemplar (int codigo, int dia, int mes)
+	public static void devolverExemplar (int matricula, int codigo, int dia, int mes)
 	{
 		for (int i = 0; i < emprestimos.size(); i++)
 		{
-			if (emprestimos.get(i).getExemplar().getCodigo() == codigo)
+			if (emprestimos.get(i).getExemplar().getCodigo() == codigo && emprestimos.get(i).getLocatario().getMatricula() == matricula)
 			{	
 				for (Exemplar e : exemplares) 
 				{
 					if (e.getCodigo() == codigo)
 					{
 						e.setQuantidade(e.getQuantidade() + 1);
+						System.out.println(emprestimos.get(i).getLocatario().getNome() + " fez uma devolução.");
 						System.out.println("\nExemplar " + e.getTitulo() + " codigo " + e.getCodigo() + " devolvido!\n");
 						
 						Calendar data = Calendar.getInstance();
