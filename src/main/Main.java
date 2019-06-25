@@ -458,17 +458,6 @@ public class Main {
 		lista.sort(Comparator.comparing(Emprestimo::getData_emp));
 		for (Emprestimo x : lista) {
 			Calendar data = Calendar.getInstance();
-			s2 = new Scanner(System.in);
-			int dia, mes, ano;
-			System.out.println("Digite o dia em que o livro foi devolvido: ");
-			dia = s2.nextInt();
-			System.out.println("Digite o mes em que o livro foi devolvido: ");
-			mes = s2.nextInt();
-			System.out.println("Digite o ano em que o livro foi devolvido: ");
-			ano = s2.nextInt();
-			data.set(Calendar.YEAR, ano);
-			data.set(Calendar.DAY_OF_MONTH, dia);
-			data.set(Calendar.MONTH, mes);
 			temp = x.getData_emp().get(Calendar.MONTH) + 1;
 			if (e == 1 && atrasado(x, data)) {
 				System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
@@ -509,17 +498,6 @@ public class Main {
 			System.out.println("\nRelatorio de emprestimos de " + loc.getNome() + ":");
 			for (Emprestimo x : emprestimos) {
 				Calendar data = Calendar.getInstance();
-				s2 = new Scanner(System.in);
-				int dia, mes, ano;
-				System.out.println("Digite o dia em que o livro foi devolvido: ");
-				dia = s2.nextInt();
-				System.out.println("Digite o mes em que o livro foi devolvido: ");
-				mes = s2.nextInt();
-				System.out.println("Digite o ano em que o livro foi devolvido: ");
-				ano = s2.nextInt();
-				data.set(Calendar.YEAR, ano);
-				data.set(Calendar.MONTH, mes);
-				data.set(Calendar.MONTH, mes);
 				if (x.getLocatario().getMatricula() == loc.getMatricula()) {
 					temp = x.getData_emp().get(Calendar.MONTH) + 1;
 					if (e == 1 && atrasado(x, data)) {

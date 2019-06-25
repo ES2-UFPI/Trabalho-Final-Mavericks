@@ -62,6 +62,7 @@ public class TesteEmprestimo {
 	
 	@Test
 	public void testCalcularData() {
+		Main.configuracao = new Configuracao(2.5, 2, 3, 4);
 		Calendar atual = Calendar.getInstance();
 		Calendar devolucao = Calendar.getInstance();
 		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
