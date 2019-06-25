@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import main.Artigo;
+import main.Configuracao;
 import main.Exemplar;
 import main.Livro;
 import main.Locatario;
@@ -102,6 +103,7 @@ public class TesteExemplar
 	@Test
 	public void devolucaoExemplar ()
 	{
+		Main.configuracao = new Configuracao(2.5, 2, 3, 4);
 		Locatario l = new Locatario("Heitor", "aluno", "123", 5);
 		Calendar atual = Calendar.getInstance();
 		Calendar devolucao = Calendar.getInstance();
@@ -111,7 +113,7 @@ public class TesteExemplar
 		Main.emprestimo(l, Main.exemplares.get(0), atual, devolucao);
 		assertEquals(1, Main.emprestimos.size());
 		assertEquals(3, Main.exemplares.get(0).getQuantidade());
-		Main.devolverExemplar(1, 24, 6);
+		Main.devolverExemplar(5, 1, 5, 7);
 		assertEquals(4, Main.exemplares.get(0).getQuantidade());
 		assertEquals(0, Main.emprestimos.size());
 	}
