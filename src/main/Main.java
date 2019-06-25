@@ -185,8 +185,8 @@ public class Main {
 
 
 	public static double calculaMulta(Emprestimo emp, Calendar dataDev) {
-		double multa=1;
-		if(atrasado(emp)) {
+		double multa=0;
+		if(atrasado(emp, dataDev)) {
 			Calendar data1 = emp.getData_dev();
 			int dias = dataDev.get(Calendar.DAY_OF_YEAR) - 
 			data1.get(Calendar.DAY_OF_YEAR);
@@ -443,9 +443,9 @@ public class Main {
 
 	}
 
-	public static boolean atrasado(Emprestimo x) {
+	public static boolean atrasado(Emprestimo x, Calendar dataDev) {
 		Calendar hj = Calendar.getInstance();
-		if (hj.compareTo(x.getData_dev()) == 1) {
+		if (dataDev.compareTo(x.getData_dev()) == 1) {
 			return true;
 		}
 		return false;
@@ -459,15 +459,18 @@ public class Main {
 		for (Emprestimo x : lista) {
 			Calendar data = Calendar.getInstance();
 			s2 = new Scanner(System.in);
-			int dia, mes;
+			int dia, mes, ano;
 			System.out.println("Digite o dia em que o livro foi devolvido: ");
 			dia = s2.nextInt();
 			System.out.println("Digite o mes em que o livro foi devolvido: ");
+			System.out.println("Digite o ano em que o livro foi devolvido: ");
+			ano = s2.nextInt();
+			data.set(Calendar.YEAR, ano);
 			mes = s2.nextInt();
 			data.set(Calendar.DAY_OF_MONTH, dia);
 			data.set(Calendar.MONTH, mes);
 			temp = x.getData_emp().get(Calendar.MONTH) + 1;
-			if (e == 1 && atrasado(x)) {
+			if (e == 1 && atrasado(x, data)) {
 				System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
 						+ x.getLocatario().getMatricula() + "\nLivro: " + x.getExemplar().getTitulo()
 						+ "\nData de Emprestimo: " + x.getData_emp().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
@@ -507,21 +510,26 @@ public class Main {
 			for (Emprestimo x : emprestimos) {
 				Calendar data = Calendar.getInstance();
 				s2 = new Scanner(System.in);
-				int dia, mes;
+				int dia, mes, ano;
 				System.out.println("Digite o dia em que o livro foi devolvido: ");
 				dia = s2.nextInt();
 				System.out.println("Digite o mes em que o livro foi devolvido: ");
 				mes = s2.nextInt();
+				System.out.println("Digite o ano em que o livro foi devolvido: ");
+				ano = s2.nextInt();
+				data.set(Calendar.YEAR, ano);
+				data.set(Calendar.MONTH, mes);
+				data.set(Calendar.MONTH, mes);
 				if (x.getLocatario().getMatricula() == loc.getMatricula()) {
 					temp = x.getData_emp().get(Calendar.MONTH) + 1;
-					if (e == 1 && atrasado(x)) {
+					if (e == 1 && atrasado(x, data)) {
 						System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "
 								+ x.getLocatario().getMatricula() + "\nLivro: " + x.getExemplar().getTitulo()
 								+ "\nData de Emprestimo: " + x.getData_emp().get(Calendar.DAY_OF_MONTH) + "/" + temp
 								+ "/" + x.getData_emp().get(Calendar.YEAR) + "\nData de Devolucao: "
 								+ x.getData_dev().get(Calendar.DAY_OF_MONTH) + "/" + temp + "/"
 								+ x.getData_emp().get(Calendar.YEAR) + "\nMulta R$ "
-								+ calculaMulta(x, data)
+								+ calculaMulta(x,data)
 								+ "\n---------------------------");
 					} else if (e == 0) {
 						System.out.println("\nNome: " + x.getLocatario().getNome() + "\nMAtricula: "

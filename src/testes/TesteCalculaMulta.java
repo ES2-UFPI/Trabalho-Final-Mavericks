@@ -30,7 +30,7 @@ public class TesteCalculaMulta {
 		Calendar dataDev = Calendar.getInstance();
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
-		hj.set(Calendar.DAY_OF_MONTH, 4);
+		hj.set(Calendar.DAY_OF_MONTH, 3);
 		hj.set(Calendar.MONTH, 1);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
@@ -57,7 +57,7 @@ public class TesteCalculaMulta {
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
 		int dias = 4;
-		hj.set(Calendar.DAY_OF_MONTH, 11);
+		hj.set(Calendar.DAY_OF_MONTH, 13);
 		hj.set(Calendar.MONTH, 1);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 3);
@@ -67,7 +67,7 @@ public class TesteCalculaMulta {
 		dataDev.set(Calendar.MONTH, 1);
 		dataDev.set(Calendar.YEAR, 2019);
 		Emprestimo em = new Emprestimo(exemplar, locatario, dataEmp, dataDev);
-		Assert.assertEquals((50 ), Main.calculaMulta(em, hj), 0.0);
+		Assert.assertEquals((150), Main.calculaMulta(em, hj), 0.0);
 		
 	}
 	
@@ -106,12 +106,12 @@ public class TesteCalculaMulta {
 		
 		Locatario locatario = new Locatario("joao", "Aluno", "123", 1);
 	
-		Main.configuracao = new Configuracao(50,7 ,7,7);
+		Main.configuracao = new Configuracao(2.50,7 ,7,7);
 		Calendar dataDev = Calendar.getInstance();
 		Calendar dataEmp = Calendar.getInstance();
 		Calendar hj = Calendar.getInstance();
 		int dias = 4;
-		hj.set(Calendar.DAY_OF_MONTH, 7);
+		hj.set(Calendar.DAY_OF_MONTH, 8);
 		hj.set(Calendar.MONTH, 2);
 		hj.set(Calendar.YEAR, 2019);
 		dataEmp.set(Calendar.DAY_OF_MONTH, 30);
@@ -121,7 +121,7 @@ public class TesteCalculaMulta {
 		dataDev.set(Calendar.MONTH, 2);
 		dataDev.set(Calendar.YEAR, 2019);
 		Emprestimo em = new Emprestimo(exemplar, locatario, dataEmp, dataDev);
-		Assert.assertEquals((50 ), Main.calculaMulta(em, hj), 0.0);
+		Assert.assertEquals((5), Main.calculaMulta(em, hj), 0.0);
 		
 	}
 
