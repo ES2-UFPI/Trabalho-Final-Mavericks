@@ -71,7 +71,7 @@ public class Main {
 					if (e.getCodigo() == codigo)
 					{
 						e.setQuantidade(e.getQuantidade() + 1);
-						System.out.println(emprestimos.get(i).getLocatario().getNome() + " fez uma devolução.");
+						System.out.println(emprestimos.get(i).getLocatario().getNome() + " fez uma devolucaoo.");
 						System.out.println("\nExemplar " + e.getTitulo() + " codigo " + e.getCodigo() + " devolvido!\n");
 						
 						Calendar data = Calendar.getInstance();
