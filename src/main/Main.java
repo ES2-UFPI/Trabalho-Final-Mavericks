@@ -463,10 +463,10 @@ public class Main {
 			System.out.println("Digite o dia em que o livro foi devolvido: ");
 			dia = s2.nextInt();
 			System.out.println("Digite o mes em que o livro foi devolvido: ");
+			mes = s2.nextInt();
 			System.out.println("Digite o ano em que o livro foi devolvido: ");
 			ano = s2.nextInt();
 			data.set(Calendar.YEAR, ano);
-			mes = s2.nextInt();
 			data.set(Calendar.DAY_OF_MONTH, dia);
 			data.set(Calendar.MONTH, mes);
 			temp = x.getData_emp().get(Calendar.MONTH) + 1;
